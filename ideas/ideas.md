@@ -21,3 +21,9 @@ DP where you maintain `A[x]: minimum cost of using x elements` and iterate throu
 
 ### Rotation `(x+y,x-y)`
 You can transform `(x,y)` into `(x+y,x-y)`. Now, Manhattan distance is Chebyshev distance: `D((x1,y1), (x2,y2)) = max(abs(x1-x2), abs(y1-y2))` 
+
+### Bloogewosh 9
+...
+
+### Union log structures
+...
