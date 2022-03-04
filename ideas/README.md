@@ -16,6 +16,9 @@ The Manhattan distance between points `X` and `Y` is "equivalent" to the Chebysh
 - `(x,y,z)` => `(x+y+z,x+y-z,x-y+z,x-y-z)`  
 Check (https://www.spoj.com/problems/DISTANCE/)
 
+### Quadratic functions in linear models
+In linear contexts (linear recurrences, min cost max flow), the quadratic function `i^2` can be modelled as the sum of the `i` first odd numbers.
+
 ## Structures
 
 ### Inserting after building
