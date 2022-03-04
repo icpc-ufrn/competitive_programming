@@ -13,7 +13,7 @@ Min/max heap with lazy delete, keep adding while you slide through
 Chebyshev distance: `D(X,Y)=max(|X_i-Y_i|)`
 The Manhattan distance between points `X` and `Y` is "equivalent" to the Chebyshev distance between `X'` and `Y'`, where `P'` is the expansion of the abs for a point (all `2^(d-1)` combinations of signals. One coordinate can be fixed since we are taking the abs). Ex:
 - `(x,y)` => `(x+y,x-y)`
-- `(x,y,z)` => `(x+y+z,x+y-z,x-y+z,x-y-z)`
+- `(x,y,z)` => `(x+y+z,x+y-z,x-y+z,x-y-z)`  
 Check (https://www.spoj.com/problems/DISTANCE/)
 
 ## Structures
