@@ -45,6 +45,10 @@ DP where you maintain `A[x]: minimum cost of using x elements` and iterate throu
 ### Game: Random vs. Greedy strategy / Black vs. white balls
 Two players take elements from an array; one follows a greedy strategy and other a random. Use dynamic programming for computing `dp[i][j]: probability of j-th element be taken by first player given that i elements are laid`
 
+## Geometry
+ 
+### Side of polygon
+A polygon has every side smaller ~or equal~ to the sum of all other sides.
 
 ## Bipartite matching
 
