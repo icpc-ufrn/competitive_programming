@@ -4,7 +4,17 @@ Summary of some ~not so~ frequent ideas
 ## General
 
 ### Automaton + Segtree
-Automatons and segtrees can be combined in some ways...
+#### Cost (chars to erase) in order to get to the accepted state
+codeforces.com/problemset/problem/750/E  
+We want to know the minimal (cost) chars to erase in order to accept some subseqs and avoid some others. 
+An automata w/ costs on edges can be modelled and for each state, there will be 3 types of edges:
+- Edges for advancing: reading its char means we won't delete it and we will advance to the next automata state
+- Edges for staying: reading its char means we will delete it and we will force the automata to stay in this state
+- Useless edges: reading its char doesn't interfer in the current state  
+Note that the edges for advancing and staying have the same charset. Edges for staying have cost 1 (since we need to delete 1 char) while other edges have 0 cost.
+
+A segtree node `(l;r)` will keep the cost of minimal path between the automata states. Thus, we only need to check the cost between the start and accepted state. Nodes can be combined using the Floyd-Warshall algorithm. `(l;l)` nodes deal with the `s[l]` char; edges that don't have `s[l]` in their charset are setted to infinite cost.
+
 
 ### RMQ query on slinding window
 Min (or max) heap with lazy delete; keep adding while you slide through
