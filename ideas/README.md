@@ -4,6 +4,9 @@ Summary of some ~not so~ frequent ideas
 ## General
 
 ### Automaton + Segtree
+
+#### String editting and pattern matching
+
 #### Cost (chars to erase) in order to get to the accepted state
 codeforces.com/problemset/problem/750/E  
 We want to know the minimal (cost) chars to erase in order to accept some subseqs and avoid some others. 
