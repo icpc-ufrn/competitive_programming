@@ -14,6 +14,7 @@ The Manhattan distance between points `X` and `Y` is "equivalent" to the Chebysh
 Check (https://www.spoj.com/problems/DISTANCE/)
 
 ### Quadratic functions in linear models
+**TODO** (https://codeforces.com/gym/102644/problem/G)
 In linear contexts (linear recurrences, min cost max flow), the quadratic function `i^2` can be modelled as the sum of the `i` first odd numbers.
 
 ### Minimum distance from a set of points/nodes
@@ -33,7 +34,7 @@ When merging `X` to `Y` (`X` left and `Y` right) into `Z`:
 Check: https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A 
 
 ### (Automaton) String editting and pattern matching
-
+**TODO**
 Check: https://codeforces.com/gym/101908/problem/H
 
 ### (Automaton) Cost (chars to erase) in order to get to the accepted state
@@ -90,6 +91,10 @@ A polygon has every side smaller ~or equal~ to the sum of all other sides.
 ### Merging nodes
 Suppose a graph with sides A and B for bipartite matching and that the size of A is really small (`<15?`). Nodes from B may be merged if they connect to the same nodes from A. The number of condensed nodes will be at most `2^sz(A)`, what might be smaller than `B`. 
 
+### Hall's theorem on contiguous intervals
+**TODO**
+Check: https://szkopul.edu.pl/problemset/problem/EwpbJWZPly_zZ5i4ytg_8fDE/site/?key=statement
+
 ## Game theory
 
 ### Last to play wins/unwanted positions
@@ -98,9 +103,10 @@ If the problem presents this variation, set the "about to win" positions as unwa
 ## String
 
 ### KMP with ordered patterns
-...
+**TODO**
 
 ### KMP capabilities
+**TODO**
 Given two strings, KMP can solve in `O(n+m)`:  
 1- biggest preffix from A that ends in `B[i]`  
 2- biggest suffix from A that starts in `B[i]`: if a suffix `S` starts in `T[i]`, `S` and `S` suffixes end in `T[i]+len(S)-1`  
