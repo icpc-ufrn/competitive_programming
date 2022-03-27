@@ -119,10 +119,15 @@ If the problem presents this variation, set the "about to win" positions as unwa
 ### KMP with ordered patterns
 KMP can also be used for ranked sequence matching i.e. find matchings of a `P_0 P_1 ... P_k` pattern in which, if `P_i > P_j` then `S_pi > S_pj` (`S_pi` char in substring matched to `P_i`). For this, we need to generalize the exact char matching (`P[i]==P[j]?`) of the original prefix function to a *can I fit `P[0:i]` into `P[j-i:j]`?* predicate. Such predicate .:
 ```
-Given P[0:i] (pattern prefix I'm trying to fit) and P[j-i:j] (suffix for the current char),  
-If, for every distance D<i, the order relation (<,=,>) between (P_(j-D) and P_j) and (P_(i-D) and P_i) (note that P_(j-D) is correspondent to P_(i-D)) are the same, then, the prefix can be fitted.
-That is, in both prefix and suffix, the last char which we are trying to add have the same order relation to the other chars positions. 
-Note that, when trying to match to P[0:i], this same predicate was asserted for all char positions < i. Thus, only this new position needed to be checked.
+Given P[0:i] (pattern prefix I'm trying to fit) and P[j-i:j] (suffix for the current char),
+If, for every distance D<i, the order relation (<,=,>) between (P_(j-D) and P_j) and (P_(i-D) and P_i)
+(note that P_(j-D) is correspondent to P_(i-D)) are the same, then, the prefix can be fitted.
+
+That is, in both prefix and suffix,
+the last char which we are trying to add have the same order relation to the other chars positions.    
+
+Note that, when trying to match to P[0:i], this same predicate was asserted for all char positions < i.    
+Thus, only this new position needed to be checked.
 ```
 Such formulation is however `O(n)`. Some optimizations can lead this to `O(1)`:
 - `=> O(alphabet)`: for each possible value, we only need to check its last position. Suppose that our pattern has two occurrences of the same value, the second occourence has already accepted the first one, so we don't need to do this again.
