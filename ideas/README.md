@@ -34,11 +34,21 @@ When merging `X` to `Y` (`X` left and `Y` right) into `Z`:
 Check: https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A 
 
 ### (Automaton) String editting and pattern matching
-**TODO**
+Given a pattern `P` and a modifiable string `S`, count how many patterns are inside `S` or modify `S`. This can be done using KMP automaton and segtree. For each `[l;r]` node for `S`, keep `to[x]` (to which automaton node the substr `S[l;r]` leads if you start traversing it from `x`) and `accs[x]` (how many times we visit the accepted node from the automaton if we start traversing `S[l;r]` from `x`).
+
+Merge two nodes using function composition: `(a+b).to[x] = b.to[a.to[x]]` and `(a+b).accs[x] = b.accs[a.to[x]] + a.accs[x]`  
 Check: https://codeforces.com/gym/101908/problem/H
 
-### (Automaton) Cost (chars to erase) in order to get to the accepted state
-codeforces.com/problemset/problem/750/E  
+### Non-commutative operations on arrays and trees (HLD)
+When dealing w/ non-commutative operations (eg. reading a string), a forward query `[l;r]` might differ from a backward `[r;l]` query.  
+For handling queries in both ways (forward and backward), your node must keep 2 internal states, one for each way.  
+When combining nodes, stablish that `(a+b).forward = merge(a.forward, b.forward)` and `(a+b).backward = merge(b.backward, a.backward)`.  
+When querying, specify if it is a forward or a backward query. If its a forward query, on a `[l;r]` node, merge `[l;mid]`'s answer to `[mid;r]`'s answer and use only forward values. Otherwise, use only backward values and merge `[mid;r]`'s answer to `[l;mid]`'s answer.
+
+On trees, going down and up are different directions, so this technique needs also to be used. Query and update orders need also to be respected at the HLD structure. 
+Check: https://codeforces.com/gym/101908/problem/H
+
+### (Automaton) Cost (chars to erase) in order to get to the accepted state  
 We want to know the minimal (cost) chars to erase in order to accept some subseqs and avoid some others. 
 An automata w/ costs on edges can be modelled and for each state, there will be 3 types of edges:
 - Edges for advancing: reading its char means we won't delete it and we will advance to the next automata state
