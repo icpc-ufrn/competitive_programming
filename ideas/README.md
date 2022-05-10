@@ -58,6 +58,14 @@ What can be done is:
  
 ## Segtree
 
+### Area of the union of rectangles
+We want the area of the union of rectangles.
+We can do this with line sweep + segtree, traversing the X axis (left to right). 
+Note that we can decompose every y-aligned edge into several intervals. Our segtree leaves are such intervals.
+While traversing the X axis, we want to count how many times each interval occured and use these interval sizes in our area calculation.
+Even if a interval is counted multiple times, it only contributes once to our area. 
+Every time we process an event in out line sweep (addition or removal of a y-aligned edge i.e. contiguous interval in our segtree), we can query the whole segtree and increment the answer.
+
 ### Best interval after some updates for easily mergeble intervals
 A node `X` with interval `[l;r]` can keep 3 infos: the best interval, preffix and suffix totally inside it.
 When merging `X` to `Y` (`X` left and `Y` right) into `Z`:  
@@ -113,7 +121,7 @@ Given `n` numbers in a random order, the expected times that the maximum seen va
 ### Argument exchange
 When trying to find the optimal order for a greedy, analyze the relation between only 2 elements. Define a cost function `f` capable of computing over both orders `AB` and `BA`. Check wich conditions are held for `f(AB) < f(BA)` (assuming `A` goes first).
 
-## DP
+## Dynamic Programming
 
 ### Knapsack - biggest subset with bounded cost 
 DP where you maintain `A[x]: minimum cost of using x elements` and iterate through elements, minimizing `A[x]` when possible
