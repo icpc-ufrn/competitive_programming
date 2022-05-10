@@ -123,12 +123,6 @@ Two players take elements from an array; one follows a greedy strategy and other
 
 Check: https://codeforces.com/problemset/gymProblem/102916/D
 
-
-## Geometry
- 
-### Side of polygon
-A polygon has every side smaller ~or equal~ to the sum of all other sides.
-
 ## Bipartite matching
 
 ### Merging nodes
