@@ -1,3 +1,3 @@
-# Traning Repository
+# Ideas and problems repository
 
-Not all codes are here. Check malheiros or brunomalettas repos.
+Not for code, only some fancy solutions and stuff.
