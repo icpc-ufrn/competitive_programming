@@ -111,6 +111,11 @@ If you are doing two pointers keeping a structure without `remove` operation but
 
 Check: https://www.codechef.com/problems/MIXFLVOR
 
+### Query which intervals contain a number
+Create a sort of Segment Tree in which each node of this scructure keeps a set of intervals.
+Update: Insert interval `(a;b)` into the `O(log)` nodes `[l;r]` maximals inside `(a;b)`.
+Query: The intervals from all nodes from root to the leaf (`x`) contain `x`. A lazy delete is needed since one interval can be in multiple nodes.
+
 ## Randomized
 
 ### Blogewoosh 6
