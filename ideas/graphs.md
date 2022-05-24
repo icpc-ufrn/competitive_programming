@@ -1,3 +1,9 @@
+# Graph ideas
+
+### Query: walk 10^9 steps from a node
+Binary lifting or cycle detection may be used.
+Cycle detection is easier to code and update (if needed). It's suitable if we are able to walk `~O(n)` (cost of detecting a cycle) for each query.
+
 # Graphs properties
 
 ### Functional graphs
