@@ -5,4 +5,4 @@ Each node has outdegree 1. A connected component contains exactly one cycle (and
 
 ### Degrees directed graphs
 - If every vertex has outdegree >= 1, the graph has a cycle
-- If, for every vertex, indegree = outdegree, the graph is a union of cycles
+- If, for every vertex, indegree = outdegree, the graph is a union of cycles and it has an eulerian circuit
