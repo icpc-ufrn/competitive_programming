@@ -23,6 +23,11 @@ Given a set of points, compute for other points in your field the min. distance 
 ### BFS with priority nodes
 Instead of visiting any reachable node for each iteration, the problem wants your BFS to visit first all reachable nodes with max priority, than those with lower priority (nodes with high priority might appear again after relaxing one w/ lower priority) and so on. For this, use a priority queue instead of a vanilla queue. Thus, you will only decrease the priority of the next visited node if those (reachable) w/ high priority run out.
 
+### BFS on too much edges, delete node after visiting
+You need to run a BFS on a graph with too much edges. What you can do is, instead of keeping all edges, keep a structure that allows you to query the adjacent vertices `Y`s from `X`. Once you visit `X`, just add all `Y`s into the queue and delete them from such structure. You can do this since they only need to be added once into the queue given that this will be their shortest distance.
+
+Check: https://codeforces.com/contest/1662/problem/F and https://codeforces.com/contest/59/problem/E
+
 ### `min(x, n - x)`
 You are given a list of elements that have a linear order and that compose a recursive structure (eg. list of tree elements in inorder).
 You want to divide and conquer these elements. However, splitting them into the recursive calls isn't trivial.
