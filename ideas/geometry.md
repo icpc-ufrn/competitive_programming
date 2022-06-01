@@ -30,3 +30,29 @@ Let:
 - b: #integer points in the polygon boundaries
 Then, A = i + (b/2) - 1
 ```
+
+### Convex closures
+(http://www.cs.cmu.edu/afs/cs/academic/class/15456-s10/ClassNotes/lecture2.pdf)  
+A convex combination of a set of points is a linear combination that is both non-negative and affine i.e. a weighted sum of such points s.t. their coefficients sum up to 1 and all are >= 0.
+- The convex closure of a point is the point itself. 
+- The convex closure of two points is the line segment between them. 
+- The convex closure of a set of points in the plane is a convex polygon.
+With this, we know that a point is inside a polygon iff it can be represented as a convex combination of some of its vectors (which can be the polygon's vertixes).
+Also, a polygon can be seen as an infinite set of vectors.
+
+### Minkoviski sum
+Definition: `A ^ B = {a + b | a \in A, b \in B}`
+
+Properties:
+- `A ^ NULL = A`
+- `A ^ {v} = {a + v | a \in A} (translating)`
+- `A ^ {0} = A`
+- `A ^ B = B ^ A`
+- `(A ^ B) ^ C = A ^ (B ^ C)`
+- `c(A ^ B) = cA ^ cB (scaling)`
+- `A /\ B != NULL` iff `0` is inside `A-B`.
+  - If `0` lies on a (non-deg) vertice of `A-B`, `A /\ B` is a point
+  - If `0` lies on an edge of `A-B`, `A /\ B` is a segment
+  - If `0` lies on inside `A-B`, `A /\ B` is a polygon
+  - `0` is inside `A-B` iff exists `a \in A` and `b \in B` s.t. `a = b <=> a - b = 0`. Since the image of `a - b` equals `A-B`, `0 \in A-B`.
+- `argmin_v((A + {v}) /\ B = NULL) = argmin_v(0 \not_in A-B+{v})`
