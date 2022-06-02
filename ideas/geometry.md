@@ -10,6 +10,13 @@ Assume that the relative error is `10^-6`.
 Lets say we cancel out `A=10^6` and `B=10^6`, their erros are `10^0`. `A-B` is now `10^0` with error `10^0`.
 We don't want this to happen.
 
+### Manhattan to Chebyshev distante
+Chebyshev distance: `D(X,Y)=max(|X_i-Y_i|)`  
+The Manhattan distance between points `X` and `Y` is "equivalent" to the Chebyshev distance between `X'` and `Y'`, where `P'` is the expansion of the abs for a point (all `2^(d-1)` combinations of signals. One coordinate can be fixed since we are taking the abs). Ex:
+- `(x,y)` => `(x+y,x-y)`
+- `(x,y,z)` => `(x+y+z,x+y-z,x-y+z,x-y-z)`  
+Check: https://www.spoj.com/problems/DISTANCE/
+
 ### Side of polygon
 A polygon has every side smaller ~or equal~ to the sum of all other sides.
 
