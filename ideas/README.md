@@ -6,13 +6,6 @@ Summary of some ~not so~ frequent ideas
 ### RMQ query on slinding window
 Min (or max) heap with lazy delete; keep adding while you slide through
 
-### Manhattan to Chebyshev distante
-Chebyshev distance: `D(X,Y)=max(|X_i-Y_i|)`  
-The Manhattan distance between points `X` and `Y` is "equivalent" to the Chebyshev distance between `X'` and `Y'`, where `P'` is the expansion of the abs for a point (all `2^(d-1)` combinations of signals. One coordinate can be fixed since we are taking the abs). Ex:
-- `(x,y)` => `(x+y,x-y)`
-- `(x,y,z)` => `(x+y+z,x+y-z,x-y+z,x-y-z)`  
-Check: https://www.spoj.com/problems/DISTANCE/
-
 ### Quadratic functions in linear models
 **TODO** (https://codeforces.com/gym/102644/problem/G)
 In linear contexts (linear recurrences, min cost max flow), the quadratic function `i^2` can be modelled as the sum of the `i` first odd numbers.
@@ -60,6 +53,12 @@ What can be done is:
 2. Solve for the `small` set
 3. Delete the `small` set elements from `all`. Can be done with lazy deleting.
 4. Solve `large`. Use `all` as `large`, orders are preserved after deleting in (3).
+ 
+
+### D-query offline
+D-query: number of different elements in a given interval
+Sort queries by `r` (1), keep a structure for querying the sum on a range on a binary vector (2) and, for each interval, keep only (3) the greatest position `<= r` active in such vector(4).
+Given a `[lq;rq]` query, each element will only be counted once in such vector (3) and it will be counted if inside the query interval (1 and 4). The sum on `[lq;rq]` in such vector (2) is the answer.
  
 ## Segtree
 
