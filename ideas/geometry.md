@@ -16,6 +16,19 @@ A polygon has every side smaller ~or equal~ to the sum of all other sides.
 ### 3 colinear points
 For each point `p`, do polar sort of all the points using `p` as center. If there are colinear points, there will be adjacent in this sorting.
 
+### Perimeter and area of convex polygons
+- Given a fixed perimeter, approximating the polygon to a circle will maximize its area
+- Given fixed edge lenghts, the area of a polygon determined by such edges will be maximized when inscribed on a circle
+- Bretschneider's formula:
+```
+area_of_quadrilateral = sqrt((s-a)(s-b)(s-c)(s-d)-abcd*cos^2((â+ĉ)/2))
+s: semiperimeter
+â and ĉ: any opposite angles
+
+- The quadrilateral can be both convex or concave, but it mustn't cross itself
+- If `d=0`, this is a triangle (Heron's formula)
+- A convex quadrilateral ABCD is cyclic iff its opposite angles are equal `180deg` => `cos(...) = 0` (Brahmagupta's formula)
+```
 ### Helly's theorem
 Let `C` be a finite family of convex polygons in `R^n` such that, for `k ≤ n + 1`, any `k` members of `C` have a nonempty intersection. 
 Then the intersection of all members of `C` is nonempty.
