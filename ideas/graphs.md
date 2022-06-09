@@ -5,7 +5,7 @@ Binary lifting or cycle detection may be used.
 Cycle detection is easier to code and update (if needed). Such is suitable if we are able to walk `~O(n)` (cost of detecting a cycle) for each query.
 
 ### Number of spanning trees of a graph in `O(N^3)`
-Kirchhoff theorem states that the number of spanning trees of a graph is equal to the determinant of any submatrix of the laplacian matrix of such graph.  
+Kirchhoff theorem states that the number of spanning trees of a graph (allows multiple edges) is equal to the determinant of any submatrix of the laplacian matrix of such graph.  
 Laplacian matrix, `Lij`:
 - `deg(v)` if `i=j`
 - edges between `i` and `j` `* -1`
