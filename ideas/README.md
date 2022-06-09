@@ -6,13 +6,6 @@ Summary of some ~not so~ frequent ideas
 ### RMQ query on slinding window
 Min (or max) heap with lazy delete; keep adding while you slide through
 
-### Manhattan to Chebyshev distante
-Chebyshev distance: `D(X,Y)=max(|X_i-Y_i|)`  
-The Manhattan distance between points `X` and `Y` is "equivalent" to the Chebyshev distance between `X'` and `Y'`, where `P'` is the expansion of the abs for a point (all `2^(d-1)` combinations of signals. One coordinate can be fixed since we are taking the abs). Ex:
-- `(x,y)` => `(x+y,x-y)`
-- `(x,y,z)` => `(x+y+z,x+y-z,x-y+z,x-y-z)`  
-Check: https://www.spoj.com/problems/DISTANCE/
-
 ### Quadratic functions in linear models
 **TODO** (https://codeforces.com/gym/102644/problem/G)
 In linear contexts (linear recurrences, min cost max flow), the quadratic function `i^2` can be modelled as the sum of the `i` first odd numbers.
@@ -22,6 +15,11 @@ Given a set of points, compute for other points in your field the min. distance 
 
 ### BFS with priority nodes
 Instead of visiting any reachable node for each iteration, the problem wants your BFS to visit first all reachable nodes with max priority, than those with lower priority (nodes with high priority might appear again after relaxing one w/ lower priority) and so on. For this, use a priority queue instead of a vanilla queue. Thus, you will only decrease the priority of the next visited node if those (reachable) w/ high priority run out.
+
+### BFS on too much edges, delete node after visiting
+You need to run a BFS on a graph with too much edges. What you can do is, instead of keeping all edges, keep a structure that allows you to query the adjacent vertices `Y`s from `X`. Once you visit `X`, just add all `Y`s into the queue and delete them from such structure. You can do this since they only need to be added once into the queue given that this will be their shortest distance.
+
+Check: https://codeforces.com/contest/1662/problem/F and https://codeforces.com/contest/59/problem/E
 
 ### `min(x, n - x)`
 You are given a list of elements that have a linear order and that compose a recursive structure (eg. list of tree elements in inorder).
@@ -55,6 +53,12 @@ What can be done is:
 2. Solve for the `small` set
 3. Delete the `small` set elements from `all`. Can be done with lazy deleting.
 4. Solve `large`. Use `all` as `large`, orders are preserved after deleting in (3).
+ 
+
+### D-query offline
+D-query: number of different elements in a given interval
+Sort queries by `r` (1), keep a structure for querying the sum on a range on a binary vector (2) and, for each interval, keep only (3) the greatest position `<= r` active in such vector(4).
+Given a `[lq;rq]` query, each element will only be counted once in such vector (3) and it will be counted if inside the query interval (1 and 4). The sum on `[lq;rq]` in such vector (2) is the answer.
  
 ## Segtree
 
@@ -103,13 +107,23 @@ Check: https://codeforces.com/problemset/problem/750/E
 
 ## Structures
 
-### Inserting after building
+### Inserting after building (`log` structures)
 If you are dealing with structures without `inserts` after querying, you can keep a set of structures with sizes of power of 2, keeping only one structure with size `2^x` at a time. Always try to insert at the `2^0`-sized structure and solve `2^x` duplicates by merging and creating a `2^(x+1)`-sized structure. Query on all `O(log(elements))` structures.
+  
+Check: https://atcoder.jp/contests/abc244/tasks/abc244_h
 
 ### Implement remove using stacks and merge
 If you are doing two pointers keeping a structure without `remove` operation but with (a cheap) `merge`, you can use a "queue" for removing (actually two stacks). Two stacks are needed since we don't want state `i+1` to keep info from `i` after its removal. By using two stacks, we keep one stack only for deleting where state `i` is built from `i+1`.
 
 Check: https://www.codechef.com/problems/MIXFLVOR
+
+### Query which intervals contain a number
+We want to keep intervals in a structure and query which intervals contain an integer `x`.  
+Create a sort of Segment Tree in which each node of this scructure keeps a set of intervals.  
+Update: Insert interval `(a;b)` into the `O(log)` nodes `[l;r]` maximals inside `(a;b)`.  
+Query: The intervals from all nodes from root to the leaf (`x`) contain `x`. A lazy delete is needed since one interval can be in multiple nodes.  
+
+Check: https://codeforces.com/contest/786/problem/B
 
 ## Randomized
 
