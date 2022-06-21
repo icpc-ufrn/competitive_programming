@@ -125,6 +125,13 @@ Query: The intervals from all nodes from root to the leaf (`x`) contain `x`. A l
 
 Check: https://codeforces.com/contest/786/problem/B
 
+### Color update, values converging after small time
+Let's suppose we are keeping a set of intervals and performing 2 types of updates on a range `[L;R]`: `set` and `op`.  
+If `op` leads to convergence to a single value in `O(C)`, one can still use the color update structure.
+A new segment is inserted `O(N + Q)` times and a segment is updated `O(C)` times (until it merges). 
+Every visited segment is either updated or deleted. One can only delete inserted segments. Thus, summing the cost for each segment, we have `O((N+Q)*C*logN)`
+
+
 ## Randomized
 
 ### Blogewoosh 6
