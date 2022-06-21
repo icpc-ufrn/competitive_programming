@@ -2,7 +2,9 @@
 
 ```
 1- If D divides A and B, A < B, D divides B-A
-2- Consecutive Fibonacci numbers are coprimes
+2- Consecutive Fibonacci numbers are coprimes3
+3- floor(floor(A/B)/C) = floor(A/(B*C))
+4- ceil(ceil(A/B)/C) = ceil(A/(B*C))
 ```
 
 #### GCD of `X+A_i`
