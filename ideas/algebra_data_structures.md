@@ -11,28 +11,40 @@ A binary opeation F distributes over a binary operation G iff G(F(a, c), F(b, c)
 Inverse element of element X in a binary operation F w/ identity element I: the inverse of X is Y iff F(X,Y) = I
 ```
 
+### Comments
+
+#### Associativity of a binary operation
+If an op. is associative, one can accumulate it.  
+**Example:** instead of inserting `N` batches of size `1` of balls, one can insert `1` batch of `N` balls
+
+### Structures
+
 #### Non-Idempotent Sparse Table
 - Associativity
-- Example: sum
+- **Example:** sum, gcd
 
 #### Idempotent Sparse Table
 - Associativity
 - Idempotence
-- Example: gcd, max, min
+- **Example:** gcd, max, min
 
 #### Fenwick Trees
 - Associativity
 - Neutral
 - Inverse
+- **Example:** sum, (prime) modular multiplication
 
 
 #### Segtree
 - Associativity
 - Neutral
+- **Example:** sum, gcd
 
 #### Lazy Segtree
-- Associativity
-- Neutral
-- Let `F` be the lazy operation and `G` the query operation
+- There are two operations now. Let `F` be the lazy operation and `G` the query operation.
+- Both need to be associative
+- Both need to have a Neutral element
+- Concerning the lazy mechanism
   - If `F` is unary, `F` needs to be compatible to `G`
   - If `F` is binary, `F` needs to be distributive over `G`
+- **Example:** `F` multiplication and `G` sum, both `F` and `G` sum
