@@ -47,4 +47,6 @@ If an op. is associative, one can accumulate it.
 - Concerning the lazy mechanism
   - If `F` is unary, `F` needs to be compatible to `G`
   - If `F` is binary, `F` needs to be distributive over `G`
-- **Example:** `F` multiplication and `G` sum, both `F` and `G` sum
+  - It is not that simple though. For some operations, the element may need to be a tuple `(value;l;r)`.   
+  Eg.: `F` set and `G` sum: `set((a,l,m) + (b, m+1, r), (x*(r-l+1), l,r)) = set((a,l,m), (x*(m-l+1), l, m)) + set((b, m+1, r), (x*(r-m), m+1, r))`
+- **Example:** `F` multiplication and `G` sum, `F` set_val and `G` sum, both `F` and `G` sum
