@@ -78,12 +78,6 @@ When merging `X` to `Y` (`X` left and `Y` right) into `Z`:
 - `Z.suffix = Y.sufix` or `X.sufix + Y.sufix` when `Y.sufix = [ly;ry]`  
 Check: https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A 
 
-### (Automaton) String editting and pattern matching
-Given a pattern `P` and a modifiable string `S`, count how many patterns are inside `S` or modify `S`. This can be done using KMP automaton and segtree. For each `[l;r]` node for `S`, keep `to[x]` (to which automaton node the substr `S[l;r]` leads if you start traversing it from `x`) and `accs[x]` (how many times we visit the accepted node from the automaton if we start traversing `S[l;r]` from `x`).
-
-Merge two nodes using function composition: `(a+b).to[x] = b.to[a.to[x]]` and `(a+b).accs[x] = b.accs[a.to[x]] + a.accs[x]`  
-Check: https://codeforces.com/gym/101908/problem/H
-
 ### Non-commutative operations on arrays and trees (HLD)
 When dealing w/ non-commutative operations (eg. reading a string), a forward query `[l;r]` might differ from a backward `[r;l]` query.  
 For handling queries in both ways (forward and backward), your node must keep 2 internal states, one for each way.  
@@ -91,6 +85,19 @@ When combining nodes, stablish that `(a+b).forward = merge(a.forward, b.forward)
 When querying, specify if it is a forward or a backward query. If its a forward query, on a `[l;r]` node, merge `[l;mid]`'s answer to `[mid;r]`'s answer and use only forward values. Otherwise, use only backward values and merge `[mid;r]`'s answer to `[l;mid]`'s answer.
 
 On trees, going down and up are different directions, so this technique needs also to be used. Query and update orders need also to be respected at the HLD structure. 
+Check: https://codeforces.com/gym/101908/problem/H
+
+### DP in Segtree
+
+If you can model a DP as a linear transformation on adjacent positions, you can encode this on a segtree and allow [TODO]
+
+Check: https://atcoder.jp/contests/abc246/tasks/abc246_h  
+Check: https://codeforces.com/gym/102644/problem/H  
+
+### (Automaton) String editting and pattern matching
+Given a pattern `P` and a modifiable string `S`, count how many patterns are inside `S` or modify `S`. This can be done using KMP automaton and segtree. For each `[l;r]` node for `S`, keep `to[x]` (to which automaton node the substr `S[l;r]` leads if you start traversing it from `x`) and `accs[x]` (how many times we visit the accepted node from the automaton if we start traversing `S[l;r]` from `x`).
+
+Merge two nodes using function composition: `(a+b).to[x] = b.to[a.to[x]]` and `(a+b).accs[x] = b.accs[a.to[x]] + a.accs[x]`  
 Check: https://codeforces.com/gym/101908/problem/H
 
 ### (Automaton) Cost (chars to erase) in order to get to the accepted state  
