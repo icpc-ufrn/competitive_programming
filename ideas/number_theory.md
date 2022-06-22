@@ -5,6 +5,7 @@
 2- Consecutive Fibonacci numbers are coprimes3
 3- floor(floor(A/B)/C) = floor(A/(B*C))
 4- ceil(ceil(A/B)/C) = ceil(A/(B*C))
+5- Between perfect squares X^2 and (X+1)^2, intervals [X^2;X^2+X] and [X^2+X+1;(X+1)^2-1] have the same sum. First interval w/ size X+1 and second w/ size X. 
 ```
 
 #### GCD of `X+A_i`
