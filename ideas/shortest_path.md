@@ -1,10 +1,10 @@
 # Shortest Path
 
-### Point w/ maximum minimum distance to a set of points
+#### Point w/ maximum minimum distance to a set of points
 If we run a multisource BFS from such set, every visited position will hold the minimum distance to this set.  
 Visit every point in the universe and take the one w/ highest distance.
 
-### BFS with priority nodes
+#### BFS with priority nodes
 Instead of visiting any reachable node for each iteration, 
 the problem wants your BFS to visit first all reachable nodes with max priority,
 than those with lower priority (nodes with high priority might appear again after relaxing one w/ lower priority) and so on.  
@@ -25,6 +25,15 @@ When visiting a node `v` with distance `d[v]` from `src`, all other nodes `x` in
 Because of this, we only need to keep and "horizon" of the `K` next layers in such graph.  
 While using a circular vector of queues of size `K+1`, we can a BFS in `O(N*K+E)`: for each node, we may need to find the next valid queue in `O(K)`.
 
+#### `[A;2A)` BFS
+Suppose that our graph has edge weights in a **real** range `[A;2A)`. Instead of using Dijkstra for the shortest path, we can use BFS.  
+Let's remodel as if the weight range were `[1;2)`. Note that the maximum distance will be `2N`.
+Also, since the minimum weight is `1`, we can cluster each node `x` by its distance `d[x]` using `floor(d[x])`. 
+That is, create `2N` queues for each distance cluster and traverse them from `0` to `2N`.   
+We can then solve `[A;2A)` if we index/cluster using `floor(d[x]/A)`.  
+
+This works like a Dijkstra but we use an array of queues for sorting and also we don't need to sort inside the same distance cluster/queue.
+Some tricks can be used for avoiding precision errors since we are dealing with real numbers.
 
 #### (Irreplaceable) Edges in shortest path from `s` to `t`
 First, run a Dijkstra from `s` and other from `t`, which will compute, for each node `x`, its minimum distance to `s` (`d_s[x]`) and to `t` (`d_t[x]`).  
