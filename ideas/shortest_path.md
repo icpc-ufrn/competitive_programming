@@ -1,6 +1,9 @@
 # Shortest Path
 
-#### Point w/ maximum minimum distance to a set of points
+#### Shortest Path is Dynamic Programming
+[TODO]
+
+#### Point w/ (maximum) minimum distance to a set of points
 If we run a multisource BFS from such set, every visited position will hold the minimum distance to this set.  
 Visit every point in the universe and take the one w/ highest distance.
 
@@ -25,18 +28,20 @@ When visiting a node `v` with distance `d[v]` from `src`, all other nodes `x` in
 Because of this, we only need to keep and "horizon" of the `K` next layers in such graph.  
 While using a circular vector of queues of size `K+1`, we can a BFS in `O(N*K+E)`: for each node, we may need to find the next valid queue in `O(K)`.
 
+This works like a Dijkstra but we use an array of queues for sorting and also we don't need to sort inside the same queue.
+
 #### Real-weighted edges on BFS
 Suppose that our graph has edge weights in a **real** range `[1;K)`, Dijkstra is too slow but `K` is small. 
-First, for using BFS instead of Dijkstra, we need something like Dial's algorithm.  
+First, for using BFS instead of Dijkstra, we need something like Dial's algorithm. Secondly, we need to know to which bucket assign vertex distance. Note that inside the same bucket, in order to keep Dial's assympotitcs, vertices can't be sorted i.e. their order must not matter.
   
-Secondly, we need to know to which bucket assign vertex distance. 
-Since every weight is at least `1`, we can put all vertices `x` with same `floor(dist[x])` together in the same queue.
-We can then solve `[A;K*A)` if we index/cluster using `floor(d[x]/A)`.  
-
-This works like a Dijkstra but we use an array of queues for sorting and also we don't need to sort inside the same distance cluster/queue.
-Some tricks can be used for avoiding precision errors since we are dealing with real numbers.
+We thus can put all vertices `x` with same `floor(dist[x])` together since every weight is at least `1`.
+Also, we can then solve `[A;K*A)` if we index/cluster using `floor(d[x]/A)`.  
 
 #### (Irreplaceable) Edges in shortest path from `s` to `t`
 First, run a Dijkstra from `s` and other from `t`, which will compute, for each node `x`, its minimum distance to `s` (`d_s[x]`) and to `t` (`d_t[x]`).  
 If an edge `(u,v)` with weight `w` is in the shortest path from `s` to `t`, then, it must be that `d_s[u] + w + d_t[v] = d_s[t] = d_t[s]`.  
 Every edge `(u,v)` in the shortest path is responsible for an interval `[d_s[u], d_s[v]]` in the shortest path. If an edge is irreplaceable, it must be the only responsible for such interval i.e. doesn't intersect w/ other edge intervals.
+
+#### K-th shortest path
+For answering the k-th shortest path problem from a source `src`, you will need to modify you Dijkstra's shortest path vector to `d[x][k]` (k-th minimum distance to `x` from `src`) for each city. Also, pushing values from `x` to `y` will try to successively update values from the `0`-th shortest path to the `k-th` of `y`. If the `i-th` shortest path is updated, it's previous value should be now used in the `i+1`-th shortest path. Counting such paths is also a thing, just do it as in a normal DP problem. Beware if values are equal, you will not overwrite the counting, but add to it.
+
