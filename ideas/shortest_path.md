@@ -14,7 +14,7 @@ than those with lower priority (nodes with high priority might appear again afte
 For this, use a priority queue instead of a queue.  
 Thus, you will only decrease the priority of the next visited node if those (reachable) w/ high priority run out.
 
-### BFS on too much edges, delete node after visiting
+#### BFS on too much edges, delete node after visiting
 You need to run a BFS on a graph with too much edges.  
 What you can do is, instead of storing all edges, keep a structure that allows you to query the adjacent vertices `Y`s from `X`.  
 Once you visit `X`, just add all `Y`s into the queue and delete them from such structure.
@@ -42,6 +42,24 @@ First, run a Dijkstra from `s` and other from `t`, which will compute, for each 
 If an edge `(u,v)` with weight `w` is in the shortest path from `s` to `t`, then, it must be that `d_s[u] + w + d_t[v] = d_s[t] = d_t[s]`.  
 Every edge `(u,v)` in the shortest path is responsible for an interval `[d_s[u], d_s[v]]` in the shortest path. If an edge is irreplaceable, it must be the only responsible for such interval i.e. doesn't intersect w/ other edge intervals.
 
-#### K-th shortest path
-For answering the k-th shortest path problem from a source `src`, you will need to modify you Dijkstra's shortest path vector to `d[x][k]` (k-th minimum distance to `x` from `src`) for each city. Also, pushing values from `x` to `y` will try to successively update values from the `0`-th shortest path to the `k-th` of `y`. If the `i-th` shortest path is updated, it's previous value should be now used in the `i+1`-th shortest path. Counting such paths is also a thing, just do it as in a normal DP problem. Beware if values are equal, you will not overwrite the counting, but add to it.
+#### `K`-th shortest path
+Use priority queue instead of set.  
+For finding the `k-th` shortest path to a node `sink` we actually need to find the `1...k`-th shortest paths for all nodes.  
+Note that the `i-th` pop of the PQ in the vertice `x` is the `i-th` shortest path from the source to `x`. Thus, for getting the `k-th` shortest path for a node `x`, we need to allow `k` pops.
+
+Note that we will restrict the number of pops, not the number of insertions in the priority queue.
+Concerning optimization (as in vanilla Dijkstra):
+- **Lazy delete:** We won't process the `i-th` pop if `i > k` since this won't change any approximation
+- **Don't add useless approximations:** Add an approximation to the PQ only if it is better than the current candidates to top `K`
+  - For this, solving "keep top `K` elements from a stream" problem will do. If it is the case of blocked paths, for each unique value, only one shortest path must be kept.
+
+#### Keep the `K` shortests paths because of `K` blocked paths
+Some problems need for you to keep for the same node the `K` shortests paths since some of these may be blocked and then you would need to ignore the blocked path and consider the following one.  
+If the blockage happens because of a condition (source or time mod `P`), the shortest paths need to be unique concerning such condition i.e. there is no need in keeping `K` different shortest paths if all of them will be blocked. Thus, keep the shortest path for each source or time mod `P`.
+
+
+Check: https://codeforces.com/gym/102006/problem/E  
+Check: https://atcoder.jp/contests/abc245/tasks/abc245_g  
+Check: https://www.hackerearth.com/challenges/competitive/september-clash-15/algorithm/dangerous-dungeon/description/  
+
 
