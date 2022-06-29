@@ -16,10 +16,22 @@ Note that an approximation of node `x` in **Dijkstra** is actually a path to nod
   
 Note that Dijkstra can also be used in DAGs. While Dijkstra will solve states in incresing order of `f(.)`, the direct method will solve them in topological order.  
 
+#### DP with states
+Since it is DP, you can create new states for each node and solve these as the shortest path problem.
+
+Check: https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1297
+Check: https://www.hackerrank.com/contests/w20/challenges/synchronous-shopping  
+Check: https://community.topcoder.com/stat?c=problem_statement&pm=12468  
+Check: https://community.topcoder.com/stat?c=problem_statement&pm=13596
+
+Some may need you to compress the graph into only useful nodes.  
+Check: https://codeforces.com/gym/101512/problem/H  
 
 #### Some problems don't look like shortest path
-But they are.
+Because it isn't obivious:  
 Check: https://szkopul.edu.pl/problemset/problem/ROXsaseQWYR11jbNvCgM19Er/site/?key=statement  
+  
+Or because the functional equation is somehow different:  
 Check: https://codeforces.com/gym/101620/problem/G  
 
 #### Point w/ (maximum) minimum distance to a set of points
@@ -39,7 +51,8 @@ What you can do is, instead of storing all edges, keep a structure that allows y
 Once you visit `X`, just add all `Y`s into the queue and delete them from such structure.
 You can do this since they only need to be added once into the queue given that this will be their shortest distance.
 
-Check: https://codeforces.com/contest/1662/problem/F and https://codeforces.com/contest/59/problem/E
+Check: https://codeforces.com/contest/1662/problem/F  
+Check: https://codeforces.com/contest/59/problem/E
 
 #### Dijkstra with buckets `O(N*K+E)`, `K`: max edge weight (`0-K` BFS) (Dial's algorithm)
 Suppose that our graph has edge weights at most `K` and that we are running a BFS from `src`.  
