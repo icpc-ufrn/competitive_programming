@@ -1,7 +1,26 @@
 # Shortest Path
 
-#### Shortest Path is Dynamic Programming
-[TODO]
+#### Shortest Path is Dynamic Programming and Dijkstra is an optimization of Bellman-Ford
+Firstly, we are dealing with optimal structures: the shortest path between two vertices is composed by other shortest paths.  
+  
+In DP problems, we will first have a **functional equation** (`f(x) = ...f(y)...`) that states the optimal modelling. Such is recursive, thus, the need of DP. Then, we need to solve this equation. We can use the **direct method** or a **successive approximation method**.
+- **Direct**: Vanilla DP. For computing the left-hand side (`f(x)`), values in the right-hand side (`...f(y)...`) must have already been computed. 
+Thus, the the modelling needs to be acyclic (**DAG**). *Note: we can actually solve self-loops in some cases by algebraic manipulation.* **Example**: Floyd-Warshall.
+- **Successive approximation:** Start with an upper bound and keep improving until a fixed point is reached (convergence). The fixed point is the solution. Cycles are allowed here. You will need to keep a list of new approximations to visit.
+ - **Pull:** At `x`, compute an approximation for `f(x)` using updated values of the RHS (`f(y)`, `x` depend on `y`). If this is the new best approximation, add nodes that depend on `x` to the list.
+ - **Push/Relaxing/Label correction:** At `y`, given an approximation of `f(y)`, compute approximations of `f(x)`, `x` depend on `y`. If such are new best approximations, add them to the list. **Example**: Dijkstra, Bellman-Ford.
+
+If the **edges are non-negative**, one can use a greedy approach on the push method in order to optimize it (**Dijkstra**). We know that, since edges are non-negative, the minimum value from the list won't ever be enhanced, being thus the optimal value. Therefore, for each iteration, we have solved one entry of our functional equation.
+  
+Note that an approximation of node `x` in **Dijkstra** is actually a path to node `x`. We are mainly generating all minimum paths to each node and taking the shortest one. It is thus guaranteed the shortest path for each node. Also, this doesn't become exponential since we stop generating paths from a node once its shortest path has been found.
+  
+Note that Dijkstra can also be used in DAGs. While Dijkstra will solve states in incresing order of `f(.)`, the direct method will solve them in topological order.  
+
+
+#### Some problems don't look like shortest path
+But they are.
+Check: https://szkopul.edu.pl/problemset/problem/ROXsaseQWYR11jbNvCgM19Er/site/?key=statement  
+Check: https://codeforces.com/gym/101620/problem/G  
 
 #### Point w/ (maximum) minimum distance to a set of points
 If we run a multisource BFS from such set, every visited position will hold the minimum distance to this set.  
@@ -50,7 +69,8 @@ Note that the `i-th` pop of the PQ in the vertice `x` is the `i-th` shortest pat
 Note that we will restrict the number of pops, not the number of insertions in the priority queue.
 Concerning optimization (as in vanilla Dijkstra):
 - **Lazy delete:** We won't process the `i-th` pop if `i > k` since this won't change any approximation
-- **Don't add useless approximations:** Add an approximation to the PQ only if it is better than the current candidates to top `K`
+- **Only add useful approximations/relaxations:** Add an approximation to the PQ only if it is better than the current candidates to top `K`
+  - Adding useless approximations won't harm correctness since better approximations will be processed before. 
   - For this, solving "keep top `K` elements from a stream" problem will do. If it is the case of blocked paths, for each unique value, only one shortest path must be kept.
 
 #### Keep the `K` shortests paths because of `K` blocked paths
