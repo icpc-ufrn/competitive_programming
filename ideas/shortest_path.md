@@ -86,7 +86,7 @@ Concerning optimization (as in vanilla Dijkstra):
   - Adding useless approximations won't harm correctness since better approximations will be processed before. 
   - For this, solving "keep top `K` elements from a stream" problem will do. If it is the case of blocked paths, for each unique value, only one shortest path must be kept.
 
-#### Keep the `K` shortests paths because of `K` blocked paths
+#### Keep the `K + 1` shortests paths because of `K` blocked paths
 Some problems need for you to keep for the same node the `K` shortests paths since some of these may be blocked and then you would need to ignore the blocked path and consider the following one.  
 If the blockage happens because of a condition (source or time mod `P`), the shortest paths need to be unique concerning such condition i.e. there is no need in keeping `K` different shortest paths if all of them will be blocked. Thus, keep the shortest path for each source or time mod `P`.
 
