@@ -22,13 +22,15 @@ Some DP optimizations work aiming to reduce the cost of considering edges for a 
 
 Assuming our graph of dependence doesn't contain cycles,  
   
-Let's say our modelling is something like `f(x) = min(f(y) + c)`. Using the direct method (in oppositon to successive approximation), this can be computed using **push** or **pull**.  
+Let's say our modelling is something like `f(x) = min(f(y) + c)`. Using the direct method (in oppositon to successive approximation), this can be computed/implemented using **push** or **pull**.  
 In the **push** method, we **update `f(x)` while in `f(y)`**. That is, we are pushing values from `f(y)` into `f(x)`. Also, `f(y)` is *contributing* to `f(x)` (more common in sums).
 While in the **pull method**, we only **compute `f(x)` only when we reach it**. 
 
 Note that, for both, when we reach `f(x)`, all `f(y)` that `f(x)` depends on must be already computed. 
 Note that, when using **memoization (recursive DP)**, we are using the **pull method**.
 
-Each problem is a problem but probably both pull and push methods can be used in every one of them (?). However, for some modellings, it may be that push or pull makes more sense.
+Depending on the problem, implementing using the pulling may be easier than pushing or vice-versa. One can also combine pushing and pulling in the same modelling.
   
 For example, let's say that `f(x) = max_ab(f(a), f(b))`. How can we push here? Note that, while in `a`, trying to push into `x`, computing which state `b` is may be confusing ~(at least I thought so)~. This problem https://codeforces.com/contest/678/problem/E works like this. 
+  
+Pushing and pulling in the same implementation: https://atcoder.jp/contests/abc242/editorial/3548.
