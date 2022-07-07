@@ -48,70 +48,32 @@ What can be done is:
 D-query: number of different elements in a given interval
 Sort queries by `r` (1), keep a structure for querying the sum on a range on a binary vector (2) and, for each interval, keep only (3) the greatest position `<= r` active in such vector(4).
 Given a `[lq;rq]` query, each element will only be counted once in such vector (3) and it will be counted if inside the query interval (1 and 4). The sum on `[lq;rq]` in such vector (2) is the answer.
- 
-## Segtree
 
-### Area of the union of rectangles
-We want the area of the union of rectangles.
-We can do this with line sweep + segtree, traversing the X axis (left to right). 
-Note that we can decompose every y-aligned edge into several intervals. Our segtree leaves are such intervals.
-While traversing the X axis, we want to count how many times each interval occured and use these interval sizes in our area calculation.
-Even if a interval is counted multiple times, it only contributes once to our area. 
-Every time we process an event in out line sweep (addition or removal of a y-aligned edge i.e. contiguous interval in our segtree), we can query the whole segtree and increment the answer.
+### Number of intersections between intervals
+Given are blue and red intervals as `[l;r]`. You want to know how many pairs `(a,b)` exist s.t. `a` is a blue interval and `b` is a red interval and `a` and `b` intersects. Naivelly, this is `O(n*m)` but we can do faster.
+  
+Let's say that `a` intervals are fixed and `b` intervals are queries. We want the sum of queries of the type: number of intervals active in `[lq;rq]`. We can solve this using preffix: Number of intervals that opened until `rq` minus number of intervals that closed until `lq-1`.
 
-### Best interval after some updates for easily mergeble intervals
-A node `X` with interval `[l;r]` can keep 3 infos: the best interval, preffix and suffix totally inside it.
-When merging `X` to `Y` (`X` left and `Y` right) into `Z`:  
-- `Z.best = max(X.best, Y.best, f(X.suffix + Y.prefix))`
-- `Z.prefix = X.prefix` or `X.prefix + Y.prefix` when `X.prefix = [lx;rx]` 
-- `Z.suffix = Y.sufix` or `X.sufix + Y.sufix` when `Y.sufix = [ly;ry]`  
-Check: https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A 
+### Sum between linear functions and between line segments
+The sum between linear functions is also a linear function.  
+The sum between `N` line segments (summing their `y` values) leads to a function which can be decomposed into at most `2N` line segments.  
 
-### Non-commutative operations on arrays and trees (HLD)
-When dealing w/ non-commutative operations (eg. reading a string), a forward query `[l;r]` might differ from a backward `[r;l]` query.  
-For handling queries in both ways (forward and backward), your node must keep 2 internal states, one for each way.  
-When combining nodes, stablish that `(a+b).forward = merge(a.forward, b.forward)` and `(a+b).backward = merge(b.backward, a.backward)`.  
-When querying, specify if it is a forward or a backward query. If its a forward query, on a `[l;r]` node, merge `[l;mid]`'s answer to `[mid;r]`'s answer and use only forward values. Otherwise, use only backward values and merge `[mid;r]`'s answer to `[l;mid]`'s answer.
+A line sweep can be done storing the ongoing accumulated slope and `y`. 
+A line segment can be expressed as a slope, the starting `y` offset and the final `y` offset. 
+Decompose a line segment into activation and deactivation points at their starting and ending times respectively.
+Activating is adding the starting `y` offset to `y` and the slope to the accumulated slope at time `t_start`.  
+Deactivating is removing the final `y` offset from `y` and the slope from the accumulated slope at time `t_end`.
 
-On trees, going down and up are different directions, so this technique needs also to be used. Query and update orders need also to be respected at the HLD structure. 
-Check: https://codeforces.com/gym/101908/problem/H
+When processing a point in the line sweep, update values as (assume that deactivations will have negative event values):
+```
+y = y + slope * (event_t - last_t) + event_y_offset
+slope += event_slope
+last_t = event_t
+```
 
-### DP in Segtree
-
-If you can model a DP as a linear transformation on adjacent positions, you can encode this on a segtree and allow [TODO]
-
-Check: https://atcoder.jp/contests/abc246/tasks/abc246_h  
-Check: https://codeforces.com/gym/102644/problem/H  
-
-### (Automaton) String editting and pattern matching
-Given a pattern `P` and a modifiable string `S`, count how many patterns are inside `S` or modify `S`. This can be done using KMP automaton and segtree. For each `[l;r]` node for `S`, keep `to[x]` (to which automaton node the substr `S[l;r]` leads if you start traversing it from `x`) and `accs[x]` (how many times we visit the accepted node from the automaton if we start traversing `S[l;r]` from `x`).
-
-Merge two nodes using function composition: `(a+b).to[x] = b.to[a.to[x]]` and `(a+b).accs[x] = b.accs[a.to[x]] + a.accs[x]`  
-Check: https://codeforces.com/gym/101908/problem/H
-
-### (Automaton) Cost (chars to erase) in order to get to the accepted state  
-We want to know the minimal (cost) chars to erase in order to accept some subseqs and avoid some others. 
-An automata w/ costs on edges can be modelled and for each state, there will be 3 types of edges:
-- Edges for advancing: reading its char means we won't delete it and we will advance to the next automata state
-- Edges for staying: reading its char means we will delete it and we will force the automata to stay in this state
-- Useless edges: reading its char doesn't interfer in the current state  
-Note that the edges for advancing and staying have the same charset. Edges for staying have cost 1 (since we need to delete 1 char) while other edges have 0 cost.
-
-A segtree node `(l;r)` will keep the cost of minimal path between the automata states. Thus, we only need to check the cost between the start and accepted state. Nodes can be combined using the Floyd-Warshall algorithm. `(l;l)` nodes deal with the `s[l]` char; edges that don't have `s[l]` in their charset are setted to infinite cost.
-
-Check: https://codeforces.com/problemset/problem/750/E
+Miminals and maximals will occur only in activation and deactivation points.
 
 ## Structures
-
-### Inserting after building (`log` structures)
-If you are dealing with structures without `inserts` after querying, you can keep a set of structures with sizes of power of 2, keeping only one structure with size `2^x` at a time. Always try to insert at the `2^0`-sized structure and solve `2^x` duplicates by merging and creating a `2^(x+1)`-sized structure. Query on all `O(log(elements))` structures.
-  
-Check: https://atcoder.jp/contests/abc244/tasks/abc244_h
-
-### Implement remove using stacks and merge
-If you are doing two pointers keeping a structure without `remove` operation but with (a cheap) `merge`, you can use a "queue" for removing (actually two stacks). Two stacks are needed since we don't want state `i+1` to keep info from `i` after its removal. By using two stacks, we keep one stack only for deleting where state `i` is built from `i+1`.
-
-Check: https://www.codechef.com/problems/MIXFLVOR
 
 ### Query which intervals contain a number
 We want to keep intervals in a structure and query which intervals contain an integer `x`.  
@@ -140,29 +102,6 @@ Given `n` numbers in a random order, the expected times that the maximum seen va
 
 ### Argument exchange
 When trying to find the optimal order for a greedy, analyze the relation between only 2 elements. Define a cost function `f` capable of computing over both orders `AB` and `BA`. Check wich conditions are held for `f(AB) < f(BA)` (assuming `A` goes first).
-
-## Dynamic Programming
-
-### Knapsack - biggest subset with bounded cost 
-DP where you maintain `A[x]: minimum cost of using x elements` and iterate through elements, minimizing `A[x]` when possible
-
-### Game: Random vs. Greedy strategy / Black vs. white balls
-Two players take elements from an array; one follows a greedy strategy and other a random. Use dynamic programming for computing `dp[i][j]: probability of j-th element be taken by first player given that i elements are laid`
-
-Check: https://codeforces.com/problemset/gymProblem/102916/D
-
-## Bipartite matching
-
-### Merging nodes
-Suppose a graph with sides A and B for bipartite matching and that the size of A is really small (`<15?`). Nodes from B may be merged if they connect to the same nodes from A. The number of condensed nodes will be at most `2^sz(A)`, what might be smaller than `B`. 
-
-### Hall's theorem on contiguous intervals
-We have a bipartite matching problem in which the `i`-th position from the left side reaches `[i-r;i+r]` on the right side. Even though Hall's theorem states that we need to check for every interval, we only need to worry about contiguous intervals: define `f(S)` as reachable positions from `S=a,b,...,z \in left`. Suppose that Hall's theorem fails for a non-contiguous `S` i.e. `|S| < |f(S)|`:
-- If `f(S)` is contiguous, the contiguous interval `[l(S);r(S)]` will also fail
-- If `f(S)` is non-contiguous, it must be that one of the contiguous segments of `S` fails too, since these are independent queries.   
-
-Thus, if a non-contiguous `S` fails, it is guaranteed that a contiguous interval will fail, so only these need to be checked.   
-Check: https://szkopul.edu.pl/problemset/problem/EwpbJWZPly_zZ5i4ytg_8fDE/site/?key=statement
 
 ## Game theory
 
