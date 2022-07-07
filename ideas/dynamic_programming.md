@@ -34,3 +34,13 @@ Depending on the problem, implementing using the pulling may be easier than push
 For example, let's say that `f(x) = max_ab(f(a), f(b))`. How can we push here? Note that, while in `a`, trying to push into `x`, computing which state `b` is may be confusing ~(at least I thought so)~. This problem https://codeforces.com/contest/678/problem/E works like this. 
   
 Pushing and pulling in the same implementation: https://atcoder.jp/contests/abc242/editorial/3548.
+
+## Modellings
+
+### Knapsack - biggest subset with bounded cost 
+DP where you maintain `A[x]: minimum cost of using x elements` and iterate through elements, minimizing `A[x]` when possible
+
+### Game: Random vs. Greedy strategy / Black vs. white balls
+Two players take elements from an array; one follows a greedy strategy and other a random. Use dynamic programming for computing `dp[i][j]: probability of j-th element be taken by first player given that i elements are laid`
+
+Check: https://codeforces.com/problemset/gymProblem/102916/D
