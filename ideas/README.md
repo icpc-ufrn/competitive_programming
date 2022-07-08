@@ -4,7 +4,7 @@ Summary of some ~not so~ frequent ideas
 ## General
 
 ### RMQ query on slinding window
-Min (or max) heap with lazy delete; keep adding while you slide through
+Min (or max) heap with lazy delete; keep adding while you slide through.
 
 ### Quadratic functions in linear models
 **TODO** (https://codeforces.com/gym/102644/problem/G)
@@ -53,6 +53,8 @@ Given a `[lq;rq]` query, each element will only be counted once in such vector (
 Given are blue and red intervals as `[l;r]`. You want to know how many pairs `(a,b)` exist s.t. `a` is a blue interval and `b` is a red interval and `a` and `b` intersects. Naivelly, this is `O(n*m)` but we can do faster.
   
 Let's say that `a` intervals are fixed and `b` intervals are queries. We want the sum of queries of the type: number of intervals active in `[lq;rq]`. We can solve this using preffix: Number of intervals that opened until `rq` minus number of intervals that closed until `lq-1`.
+  
+Check: https://codeforces.com/gym/102433/problem/G
 
 ### Sum between linear functions and between line segments
 The sum between linear functions is also a linear function.  
@@ -72,6 +74,8 @@ last_t = event_t
 ```
 
 Miminals and maximals will occur only in activation and deactivation points.
+  
+Check: https://codeforces.com/gym/102433/problem/J
 
 ## Structures
 
@@ -103,9 +107,20 @@ Given `n` numbers in a random order, the expected times that the maximum seen va
 ### Argument exchange
 When trying to find the optimal order for a greedy, analyze the relation between only 2 elements. Define a cost function `f` capable of computing over both orders `AB` and `BA`. Check wich conditions are held for `f(AB) < f(BA)` (assuming `A` goes first).
 
+### Find `k`-th lexicographically smallest sequence
+Let's say we can count how many sequences can be genereted by adding `x` at the `i-th` position.  
+The problem can be then tackled as a `n`-ary (like Trie) structure in which we can visit nodes in order until the `k`-th sequence is reached.  
+After adding `x`, we visit a subproblem which can be tackled in the same way. This is a recursive procedure like searching for the `k`-th smaller node on a binary tree.
+  
+Check: https://codeforces.com/gym/102433/problem/F
+
+### Building optimal sequences
+TODO
+
+Check: https://codeforces.com/gym/103640/problem/M  
+Check: https://codeforces.com/contest/678/problem/E
+
 ## Game theory
 
 ### Last to play wins/unwanted positions
 If the problem presents this variation, set the "about to win" positions as unwanted positions (really high grundy). Thus, states leading only to such positions will get a losing status.
-
-
