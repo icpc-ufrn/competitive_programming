@@ -1,14 +1,18 @@
 # Graph ideas
 
 ### Query: walk 10^9 steps from a node
-Binary lifting or cycle detection may be used.
-Cycle detection is easier to code and update (if needed). Such is suitable if we are able to walk `~O(n)` (cost of detecting a cycle) for each query.
+Binary lifting or cycle detection may be used. This is probably a graph in which every outdegree is `1`.
+
+Binary lifting: Precompute `bf[x][i]`: where will I stop if start from `x` and walk `2^i` edges. 
+Cycle detection: find a cycle of length `L` in `O(n)`, use this cycle `K/L` times and walk `L` naively. Since `L` is `O(n)`, the total cost is `O(n)`.
+
+If there are multiple queries, binary lifting might be better. If there are updates, binary lifting might have a drawback since it's idea is to be a precomputed structure.
 
 ### Number of spanning trees of a graph in `O(N^3)`
 Kirchhoff theorem states that the number of spanning trees of a graph (allows multiple edges) is equal to the determinant of any submatrix of the laplacian matrix of such graph.  
 Laplacian matrix, `Lij`:
-- `deg(v)` if `i=j`
-- edges between `i` and `j` `* -1`
+- if `i=j`: `deg(v)` 
+- else: edges between `i` and `j` `* -1`
 
 ### Partitioning set of nodes `S` for DP: `g(S) = sum_T[f(T)*g(S-T)]`
 For some DP modelling, when computing `f(S)`, `S` set of vertices, we might need to partition `S` into exclusive cases in order to avoid processing the same thing twice (eg. when using non-idempotent ops). 
