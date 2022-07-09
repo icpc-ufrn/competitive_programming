@@ -31,7 +31,7 @@ If an op. is associative, one can accumulate it.
 #### Fenwick Trees
 - Associativity
 - Neutral
-- Inverse
+- Inverse if range query. Won't need if only handling preffixes.
 - **Example:** sum, (prime) modular multiplication
 
 
@@ -43,9 +43,9 @@ If an op. is associative, one can accumulate it.
 #### Lazy Segtree
 - There are two operations now. Let `F` be the lazy operation (or combination of operations) and `G` the query operation.
 - Both need to be associative
-- Both need to have a Neutral element
+- Both need to have a neutral element
 - Concerning `F`
-  - Modelling multiple update functions might be untrivial. Let's say however that you've found a function `F` such that all your updates can be expressed in terms of `F`.
+  - Implementing multiple update functions might be untrivial. Let's say however that you've found a function `F` such that all your updates can be expressed in terms of `F`.
   - Such will be in the format of `F(a, b, c, ..., x)` where `a`, `b` and `c` are operation arguments and `x` is the value in which we are applying the update.
   - Define the family of functions `G` where we fix the valid operation arguments: `F(a,b,c,x) => F_abc(x)`. It must be that `G` is closed under composition: `F_abc(F_def(x)) = F_xyz(x)`. That is, we can combine two updates into one update of the same form.
   - **Example:** combining `set` and `increment` as lazy updates into `F(set_flag, set_val, incr_flag, incr_val, x) = set_flag * set_val + incr_flag * (incr_val + x)`.
