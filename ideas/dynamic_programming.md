@@ -44,3 +44,6 @@ DP where you maintain `A[x]: minimum cost of using x elements` and iterate throu
 Two players take elements from an array; one follows a greedy strategy and other a random. Use dynamic programming for computing `dp[i][j]: probability of j-th element be taken by first player given that i elements are laid`
 
 Check: https://codeforces.com/problemset/gymProblem/102916/D
+
+### Can partition array into segments? Know for each starting position the range of possible ending positions
+Check: https://codeforces.com/contest/985/problem/E
