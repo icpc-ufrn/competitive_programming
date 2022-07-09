@@ -96,3 +96,5 @@ Check: https://atcoder.jp/contests/abc245/tasks/abc245_g
 Check: https://www.hackerearth.com/challenges/competitive/september-clash-15/algorithm/dangerous-dungeon/description/  
 
 
+#### Edges with timestamps
+If it is the case that an edge will only be avaiable at a specific timestamp, a sort of line sweep on the edges can be performed. [TODO]
