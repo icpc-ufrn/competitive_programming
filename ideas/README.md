@@ -120,6 +120,14 @@ TODO
 Check: https://codeforces.com/gym/103640/problem/M  
 Check: https://codeforces.com/contest/678/problem/E
 
+### Maximize sum of `N`, choosing between options `A` and `B` for each element, where the max count of option `A` is `k`
+Let's say you want to maximize `sum` of an array of size `N` and that, for each element, you can choose between `a_i_A` and `a_i_B`. But there can be only `k` elements with option `A` choosen.
+  
+What you can do is:
+- Suppose you choose option `B` for all elements. Store this sum in `sumB`
+- Sort elements using their balance `a_i_A - a_i_B`. This balance means "how much is it worth to change from `B` to `A`". 
+- Iterate through the sorted elements, visiting the first `k`, converting them from `B` to `A`: `sumB -= a_i_B` and `sumA += a_i_A`. Since `bal = a_i_A - a_i_B`, you can also use `sumA += bal + a_i_B`.
+
 ## Game theory
 
 ### Last to play wins/unwanted positions
