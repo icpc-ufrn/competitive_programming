@@ -16,6 +16,8 @@ The LMC of `a_0, a_1, ..., a_n` is the productory of `p^max_e` for each prime `p
 #### GCD of `X+A_i`
 By `(1)`, `GCD(X+A_i,X+A_j)=GCD(X+A_i, A_i-A_j)` and now by associativity and idempotency, `GCD(X+A_0, X+A_1, X+A_2, ...) = GCD(X+A_0, A_1-A_0, A_2-A_1, ...)`
 
+## Permutations
+
 ### Permutation graphs are the union of simple cycles
 They just are. Every node has outdegree `= 1`.
 
