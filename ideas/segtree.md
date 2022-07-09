@@ -1,9 +1,15 @@
 # Segtree
 
+### Histogram on a weighted array
+Let's say we have an array where `a_i` is a weight and we have operations like `add(lu;ru)`: add weights from `a_i`, (`lu <= i <= ru`) to out Segtree.  
+What we can do is set for each Segtree node `x` with interval `[l;r]` a variable `val[x]`: sum of `a_i` (`l <= i <= r`) and use this `val[x]` in our operations:  
+`add(lu;ru)` will processed as add `val[x]` to `seg[x]` if `x` is inside `[lu;ru]`.
+
 ### Area of the union of rectangles
 We want the area of the union of rectangles.
 We can do this with line sweep + segtree, traversing the X axis (left to right). 
-Note that we can decompose every y-aligned edge into several intervals. Our segtree leaves are such intervals.
+Note that we can decompose every y-aligned edge into several intervals (consecutive endpoints considering all endpoints). 
+Our segtree leaves are such intervals. These will have weights just as handling a **histogram on a weighted array**.  
 While traversing the X axis, we want to count how many times each interval occured and use these interval sizes in our area calculation.
 Even if a interval is counted multiple times, it only contributes once to our area. 
 Every time we process an event in out line sweep (addition or removal of a y-aligned edge i.e. contiguous interval in our segtree), we can query the whole segtree and increment the answer.
