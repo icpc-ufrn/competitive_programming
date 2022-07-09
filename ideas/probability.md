@@ -11,9 +11,9 @@ If probability of success is `p`, the expected number of trials until success is
 Let's say you have a process in which you keep updating a state and there is a set of final states you may reach. You wan't to know the expected number of moves until you reach a final state.  
   
 Note that states can be seen as a graph and for each state there is a set of edges going out from it to other states. Cycles may be allowed.
-There are several modellings for this since this is quite generic. One of such modelling is:
+There are several modellings for this since this is quite generic. One of such modellings is:
 - Partition states such that for each partition you are able to compute:
   - Probability of a state in this partiton not being a final state
   - Expected number of moves for leaving this partition
-  - There can't be cycles outside of a partition
-  - We are then finding the answer not aiming a final state but counting the number of steps non-final states take for leaving the current partition
+  - Note: There can't be cycles between different partitions
+  - We are then finding the answer not aiming a final state but counting the number of steps non-final states take until leaving the current partition
