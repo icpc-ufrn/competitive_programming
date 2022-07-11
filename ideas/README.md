@@ -1,6 +1,12 @@
 # Ideas
 Summary of some ~not so~ frequent ideas
 
+```
+Q is necessary for P (P => Q): If (P => Q), it is impossible P without Q.
+P is sufficient for Q (P => Q)
+P is sufficient and necessary for Q, (P => Q) and (Q => P)
+```
+
 ## General
 
 ### RMQ query on slinding window
@@ -43,7 +49,6 @@ What can be done is:
 3. Delete the `small` set elements from `all`. Can be done with lazy deleting.
 4. Solve `large`. Use `all` as `large`, orders are preserved after deleting in (3).
  
-
 ### D-query offline
 D-query: number of different elements in a given interval
 Sort queries by `r` (1), keep a structure for querying the sum on a range on a binary vector (2) and, for each interval, keep only (3) the greatest position `<= r` active in such vector(4).
@@ -76,6 +81,37 @@ last_t = event_t
 Miminals and maximals will occur only in activation and deactivation points.
   
 Check: https://codeforces.com/gym/102433/problem/J
+
+### Reduce the number of variables in conditions (invariants)
+**Building a sequence**  
+Let's say we have the following condition `a_j - a_i < v(t_j - t_i)` for building a sequence.  
+This can be manipulated to `a_j - a_i < vt_j - vt_i` and further to `a_j - vt_j < a_i - vt_i`. 
+If we define `x_i = a_i - vt_i`, we can reduce this to `x_j < x_i`.
+
+If there are multiple conditions `AND`, it is feasible to reduce these to `(x_i < x_j, y_i < y_j, ...)`  and solve this as the longest increasing subsequence of tuples.
+
+Check: https://codeforces.com/contest/1662/problem/L
+
+**Count intervals w/ ratio > `X`**  
+
+Another example using preffixes. Count the number of intervals `[L;R]` s.t. the ratio of active bits over its size is greater than `X`:
+```
+sum_1 / sz > x <=> (sum_r - sum_l) / (r - l) > x <=> 
+(sum_r - sum_l) > x (r - l) <=> sum_r - sum_l > xr - xl <=> 
+sum_r - sum_l > xr - xl <=> sum_r - xr > sum_l - xl <=> 
+y_r > y_l
+```  
+Check: https://codeforces.com/gym/102134/problem/D
+
+### Longest increasing subsequence of tuples (`x_i < x_j`, `y_i < y_j`, ...).
+This is the longest chain of `tuple_i` s.t. `tuple_i` "dominates" `tuple_i-1`. Solve using CQD, BITs, sorting, ...
+
+## Paths down-right on a grid while summing elements
+Take a 2D grid and a path with sum `sum` going either down or right on it. `a_ij` of this grid has a value and passing through `(i,j)` adds it to `sum`. Note that each diagonal is visited exactly once in a path.  
+
+From a path you can go to an adjacent path by replacing a cell on diagonal `D` to another cell in `D` adjacent to it. Note that the removed cell needs to be a corner cell; otherwise, the path disconnects. Also, with such operation you can visit all possible paths. 
+  
+What happens to `sum` when you switch paths? What happens to its parity? Is the range of possible `sum` values contiguos?
 
 ## Structures
 
