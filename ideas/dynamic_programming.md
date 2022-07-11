@@ -60,5 +60,37 @@ Insert the `n`-th element by either skipping `n-1` or not.
 Let's say `f(n)` is defined as `g(n)` but on a circular array and `g(n)` builds on choosing elements or not.  
 Solve `g(n)` while keeping an extra state, a flag, indicating whether the first element was taken or not. Now, each state `g[n]` will have two versions (`g[n][0]` and `g[n][1]`) indicating whether the first element was already taken. Use this to solve `f(n)` by solving cases.
 
+### Number of sequences with restrictions on consecutive elements
+Define `f(n):` number of sequences with `n` elements with restrictions on adjacent elements.
+Let's say we have:
+- a restriction-unaware way of transitioning from `f(n-1)`, creating **all** new sequences (`g`)
+- a way of counting **all** bad sequences built from `f(n-2)` (`h`)
+  
+Thus, `f(n) = g(f(n-1)) - h(f(n-2))`.  
 
+For instance, if we are computing the number of paths of size `k` that don't use the same edge twice in a row:
+- `f(n)[i]`: number paths of size n ending in i
+- `g(x) = Adj_matrix * x`: creating **all** paths, some might fail restrictions
+- `h(x) = Diag - Id`: creating 2-sized paths that use that goes forth and back at the same edge
+
+### Linear recurrences
+Can be expressed in term of matrixes. Matrix exponentiation is associative, what enables us to solve a linear DP using:
+- Segtree
+- BIT
+- Matrix exponentation
+- ...
+
+### Matrix and tensor exponentiation
+Let's say we want to compute the number of paths of size `k` on a graph of size `N`. This can be solved by exponentiating `Adj_matrix`.  
+Our DP state will need to keep the number of paths for each vertex :`F(k)(i)` is the number of paths of size `k` ending at `i`. Our transition  is `F(k) = F(k - 1) * Adj_matrix` which is a simplification of `F(k)(i) = sum(F(k-1)(j)*to(j)(i))`.  
+  
+Note that our transition has only one term (`F(k - 1) * Adj_matrix`) which is already a simplification of `sum(F(k-1)(j)*to(j)(i))` for each `i`. But what if there is now another term?  
+  
+Let's say now that we want paths of size `k` that don't use the same edge twice in a row. This can modelled as `G(k) = G(k-1) * Adj_matrix - G(k-2) * (Diag - Id)`.  
+Just as before, this linear combination can be simplified into a matrix (but now we are handling **tensors** since `Adj_matrix` is already a matrix).  
+  
+Thus, at first we had scalars multiplying `F(k-1)(j)` and we built a matrix (`Adj_matrix`). Then, we had matrixes multiplying `G(k-1)` and we built tensors. 
+
+Note that tensors from G(x) could be flattened into matrixes. With tensors of size `M` keeping matrixes of size `N`, we multiply `M^3` times with cost `N^3`. Thus, `M^3 * N^3`.  
+Flatenning these tensors into matrixes of size `MN`, we would have `(MN)^3` multiplications of cost `1`. Thus, the same complexity.
 
