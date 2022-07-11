@@ -113,6 +113,9 @@ From a path you can go to an adjacent path by replacing a cell on diagonal `D` t
   
 What happens to `sum` when you switch paths? What happens to its parity? Is the range of possible `sum` values contiguos?
 
+### Don't put `x` and `y` in the same set (there are 2 sets)
+Create a graph `G` such that if `x` and `y` can't be together, there is an edge `(x,y)` in it. We thus want to check if this graph is bipartite.
+
 ## Structures
 
 ### Query which intervals contain a number
