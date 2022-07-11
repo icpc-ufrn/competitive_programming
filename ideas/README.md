@@ -106,7 +106,7 @@ Check: https://codeforces.com/gym/102134/problem/D
 ### Longest increasing subsequence of tuples (`x_i < x_j`, `y_i < y_j`, ...).
 This is the longest chain of `tuple_i` s.t. `tuple_i` "dominates" `tuple_i-1`. Solve using CQD, BITs, sorting, ...
 
-## Paths down-right on a grid while summing elements
+### Paths down-right on a grid while summing elements
 Take a 2D grid and a path with sum `sum` going either down or right on it. `a_ij` of this grid has a value and passing through `(i,j)` adds it to `sum`. Note that each diagonal is visited exactly once in a path.  
 
 From a path you can go to an adjacent path by replacing a cell on diagonal `D` to another cell in `D` adjacent to it. Note that the removed cell needs to be a corner cell; otherwise, the path disconnects. Also, with such operation you can visit all possible paths. 
