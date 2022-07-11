@@ -19,17 +19,19 @@ Query on all `O(log(elements))` structures.
   
 Check: https://atcoder.jp/contests/abc244/tasks/abc244_h
 
-### Implementing two pointers without remove but with merge and stacks \[ONLINE\]
-TODO
-If you are doing two pointers keeping a structure without `remove` operation but with (a cheap) `merge`,
-you can use a "queue" for removing (actually two stacks).  
-Two stacks are needed since we don't want state `i+1` to keep info from `i` after its removal.  
-By using two stacks, we keep one stack only for deleting where state `i` is built from `i+1`.
+### Implementing two pointers with 2 stacks / structures without `remove` \[ONLINE\]
 
+A queue can be implemented using 2 stacks `A`, `B`, each stack will be responsible for a range `[lA;rA]` and `[lB;rB]`. The union of theses ranges is also contiguos.:
+- New elements are added into `A`.
+- Old elements are popped from `B`. When `B` reaches size `0`, build `B` using elements from `A`. Also, build it from `rB` to `lB`, that is, the top of the stack will be `lB`. Thus, when popping, elements from `[lB+1;rB]` will keep inside the structure.
+  
+This is particularly useful if you are implementing 2 pointers in a structure without `remove` operation.  
+If the query operation is associative, query each stack and then combine their answers. Otherwise, merge them together for querying.
+  
 Check: https://www.codechef.com/problems/MIXFLVOR
 
-### Removing from structures without remove \[OFFLINE\]
+### Removing from structures without `remove` \[OFFLINE\]
 TODO
 
-### Removing from structures without remove \[ONLINE]\
+### Removing from structures without `remove` \[ONLINE\]
 TODO
