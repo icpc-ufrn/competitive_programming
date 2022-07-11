@@ -45,5 +45,20 @@ Two players take elements from an array; one follows a greedy strategy and other
 
 Check: https://codeforces.com/problemset/gymProblem/102916/D
 
-### Can partition array into segments? Know for each starting position the range of possible ending positions
+### Transition querying range of elements
+Approach solving the transitions using a RMQ/segment query structure.  
+  
+For instance, `f(i) = true, iff for any i in [l;r], f(i + 1) is true`, one can solve `f(i)` by range querying `[l+1;r+1]`.
+  
 Check: https://codeforces.com/contest/985/problem/E
+
+### How many ways to choose at least one element for each pair of two consecutive elements
+`f(n) = f(n - 1) + f(n - 2)`  
+Insert the `n`-th element by either skipping `n-1` or not.
+
+### Choosing elements in a circular array
+Let's say `f(n)` is defined as `g(n)` but on a circular array and `g(n)` builds on choosing elements or not.  
+Solve `g(n)` while keeping an extra state, a flag, indicating whether the first element was taken or not. Now, each state `g[n]` will have two versions (`g[n][0]` and `g[n][1]`) indicating whether the first element was already taken. Use this to solve `f(n)` by solving cases.
+
+
+
