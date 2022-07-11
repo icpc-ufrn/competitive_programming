@@ -22,9 +22,9 @@ When merging `X` to `Y` (`X` left and `Y` right) into `Z`:
 - `Z.suffix = Y.sufix` or `X.sufix + Y.sufix` when `Y.sufix = [ly;ry]`  
 Check: https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A 
 
-## DP in Segtree
+## Linear recurrences on consecutive positions on Segtrees
 
-If you can model a DP as a linear transformation on adjacent positions, you can encode this on a segtree and allow [TODO]
+Linear recurrences for DP when expressed over adjacent positions can be used in segtrees since matrixes can encode such transitions. Since matrix multiplication (or other operation in question) is associative, segtree can be used.
 
 Check: https://atcoder.jp/contests/abc246/tasks/abc246_h  
 Check: https://codeforces.com/gym/102644/problem/H  
