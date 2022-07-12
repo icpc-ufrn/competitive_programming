@@ -40,6 +40,22 @@ We have a bipartite matching problem in which the `i`-th position from the left 
 Thus, if a non-contiguous `S` fails, it is guaranteed that a contiguous interval will fail, so only these need to be checked.   
 Check: https://szkopul.edu.pl/problemset/problem/EwpbJWZPly_zZ5i4ytg_8fDE/site/?key=statement
 
+## 2SAT
+Build an implication graph: nodes are propositions (`x`) and their negations (`~x`) and there is a **direct** edge `(p,q)` if `p => q`. Also, if `(p,q)` exists, so does `(~q,~p)` (contraposition). 
+  
+A path `x...y` in this graph indicates that, if `x` is set to true, `y` also needs also to be true. A valoration will satisfy the clauses iff there won't be `x=true` and `y=false` and there exists a path `x...y`.  
+  
+**First, we need to check whether `x` and `~x` are in the same SCC**. 
+If that is the case, there is a path from `x` to `~x` and from `~x` to `x`, it means that we can't satisfy the clauses:
+- if we set `x` to true, since `x => ~x`, `~x` would also be true (absurd)
+- if we set `x` to false, `~x` would need to be true, and, since `~x => x`, `x` would also be true (absurd)
+
+Then, build the condensation graph. All variables in the same SCC have the same truth value. 
+
+TODO
+  
+
+
 # Graphs properties
 
 ### Functional graphs
@@ -48,3 +64,7 @@ Each node has outdegree 1. A connected component contains exactly one cycle (and
 ### Degrees directed graphs
 - If every vertex has outdegree >= 1, the graph has a cycle
 - If, for every vertex, indegree = outdegree, the graph is a union of cycles and it has an eulerian circuit
+
+### Condensation graph
+Graph resulted after collapsing SCCs into a single node. This graph is acyclic.
+
