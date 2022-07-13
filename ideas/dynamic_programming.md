@@ -68,7 +68,7 @@ For instance, if we are computing the number of paths of size `k` that don't use
 
 ### DPs w/ transitions in timestamps (and different query/updt timestamps)
 Let's say we are dealing w/ a DP in which a transition `f(i) = ...f(j)...` has a time to be processed.  
-This yields a line sweep algorithm on the timestamps of these transitions.  
+This yields a line sweep algorithm on the timestamps of these transitions and probably a **successive approximation** approach.  
   
 If a transition has a time for querying and another for updating, one needs to keep these latent updates and only publish them in the appropriate moment. That is, if a transition `x` has `query_time_x=10` and `update_time_x=15` and another transition `y` has `query_time_y=11` and `update_time_y=13`, transition `y` must not access updates from transition `x`.  
 One way of solving this is keeping in a priority queue sorted by time the transitions to be published. Once we reach a `query_time` that is able to access the top transition from this pq, we may publish it.
