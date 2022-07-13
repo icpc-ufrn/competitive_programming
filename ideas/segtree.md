@@ -29,13 +29,13 @@ Linear recurrences for DP when expressed over adjacent positions can be used in 
 Check: https://atcoder.jp/contests/abc246/tasks/abc246_h  
 Check: https://codeforces.com/gym/102644/problem/H  
 
-### (Automaton) String editting and pattern matching
+### String editting and pattern matching `[Automaton]`
 Given a pattern `P` and a modifiable string `S`, count how many patterns are inside `S` or modify `S`. This can be done using KMP automaton and segtree. For each `[l;r]` node for `S`, keep `to[x]` (to which automaton node the substr `S[l;r]` leads if you start traversing it from `x`) and `accs[x]` (how many times we visit the accepted node from the automaton if we start traversing `S[l;r]` from `x`).
 
 Merge two nodes using function composition: `(a+b).to[x] = b.to[a.to[x]]` and `(a+b).accs[x] = b.accs[a.to[x]] + a.accs[x]`  
 Check: https://codeforces.com/gym/101908/problem/H
 
-### (Automaton) Cost (chars to erase) in order to get to the accepted state  
+### Cost (chars to erase) in order to get to the accepted state `[Automaton]` 
 We want to know the minimal (cost) chars to erase in order to accept some subseqs and avoid some others. 
 An automata w/ costs on edges can be modelled and for each state, there will be 3 types of edges:
 - Edges for advancing: reading its char means we won't delete it and we will advance to the next automata state
@@ -46,6 +46,61 @@ Note that the edges for advancing and staying have the same charset. Edges for s
 A segtree node `(l;r)` will keep the cost of minimal path between the automata states. Thus, we only need to check the cost between the start and accepted state. Nodes can be combined using the Floyd-Warshall algorithm. `(l;l)` nodes deal with the `s[l]` char; edges that don't have `s[l]` in their charset are setted to infinite cost.
 
 Check: https://codeforces.com/problemset/problem/750/E
+
+## Persistent Segtree
+
+### Each `a[i]` has a range, find for `[L;R]` `a[i]` s.t. `a[i].l <= L, R <= a[i].r`, intervals are inside `[1;N]`
+
+There will be `N` versions of `seg`, one for each position in `[1;N]`, `seg_i` holds:
+- all `a[j]` s.t. `a[j].l <= i`. `a[j]` is added at position `j` as a pair `(a[j].r, j)` (right limit and its id)
+
+Note that `seg` at version `i` acts as a prefix, keeping all items w/ endpoint leq `i`. Thus, we will build this seg as a prefix:
+- group elements by their `.l`
+- iterate `i` from `1` to `N`, creating a new version of `seg` at `i` and adding in this position elements w/ `.l = i`.
+
+When querying for interval `[L;R]`, query on `seg_L` for the max element comparing the `.r` added. If the `.r` found is `>= R`, the range of the respective element contains `[L;R]`.
+
+### COT `[TODO]`
+
+[segtree persistente❤️][prefixo][busca binaria paralela][histograma][arvore][lca]
+
+Dada uma árvore com valores em seus nós, diga, para cada query (u,v,k), o k-esimo menor elemento que acontece no caminho de (u,v).
+
+É uma ideia nova então é meio difícil de tentar trazer uma intuição por trás, então vou apresentando os pedaços e como eles chegam na solução.
+
+-SP: segtree persistente
+-lc(X): filho esq. de X
+-rc(X): filho dir. de X
+-r(X): limite dir. de X
+-l(X): limite esq. de X
+-qntd(X): qntd de valores ativos no hist. em X.
+-hist(u): hist prefixo em u
+
+(1): Para cada vértice da árvore, mantenha um histograma dos valores de vértices que acontecem da raiz até esse vértices. Essa info consegue ficar num node de uma SP. Custo O(nlogn).
+
+Basta, numa DFS visitando X com pai Y, criar um novo node hist(X) "em cima" do hist(Y), agora com a contagem do valor de X atualizado. "em cima"(Y) é fazer um update em cima de Y, como de praxe em SP.
+
+Note que o histograma de Y é um "prefixo" do histograma de X.
+
+(2): Para uma segtree (normal) de histograma, achar o k-esimo menor valor em O(logn).
+
+É uma ideia recursiva/BB.
+Estamos procurando o k-esimo menor valor no nó X (com filhos lc(X) e rc(X)).
+Note que qntd(lc(X)) nos diz qntd. valores ativos em [l(lc(x));r(lc(x))]
+Se k > qntd(lc(X)), procure em rc(X) com k = k - lc(X).
+Senão, procure em lc(X) com k.
+
+(3): É possível combinar (somando ou subtraindo) e achar o k-esimo menor elemento em O(logn) de duas segtrees de histogramas.
+É necessário que haja uma correspondência em cima dos intervalos de seus nós.
+
+Sejam X e Y as raízes das segtrees. Temos que L = l(lc(X)) = l(lc(Y)) e R = r(lc(X)) = r(lc(Y)).
+Seguindo a mesma ideia de (2), temos a quantidade de elementos no intervalo [L;R] ao combinarmos qntd(X) e qntd(Y) (somando ou subtraindo).
+Compare k com qntd(X) +/- qntd(Y) e siga os passos semelhantes a (2).
+
+(4): O k-esimo elemento no caminho de u até v pode ser econtrado usando (1) e (3).
+
+Note que combinando (+hist(u), +hist(v), -hist(lca(u,v)), -hist(par(lca(u,v)))) tem a contagem dos valores no caminho de u até v.
+Para combinar esses histogramas, tome seus nós na SP construídos em (1) e execute o algoritmo descrito em (3).
 
 ## HLD
 ### Non-commutative operations on arrays and trees
