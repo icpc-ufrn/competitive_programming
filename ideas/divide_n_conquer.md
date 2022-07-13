@@ -1,14 +1,15 @@
 # Divide and Conquer
 
-Segtree is divide and conquer with memoization.
+- Segtree is divide and conquer with memoization and update.
 
 
 ### Max/min/coprime in range
 
 Max, min and coprimes work as segments partitioners. I mean:
-- if `a[i]` is max/min in `[l;r]`, only segments not including `i` will have a different max/min value. Thus, intervals `[l;i-1]` and `[i+1;r]` are now subproblems.
-- 
-
+- if `a[i]` is max/min in `[l;r]`, only segments not including `i` will have a different max/min value. 
+  - Thus, intervals `[l;i-1]` and `[i+1;r]` are now subproblems.
+- If `a[i]` is coprime from `[l;r]`, `gcd([l;r])=1`. 
+  - Thus, intervals `[l;i-1]` and `[i+1;r]` are now subproblems (might still hold `gcd=1`).
 Check: https://codeforces.com/contest/1156/problem/E
 Check: https://codeforces.com/gym/101623/problem/F
 
