@@ -45,13 +45,6 @@ Two players take elements from an array; one follows a greedy strategy and other
 
 Check: https://codeforces.com/problemset/gymProblem/102916/D
 
-### Transition querying range of elements
-Approach solving the transitions using a RMQ/segment query structure.  
-  
-For instance, `f(i) = true, iff for any i in [l;r], f(i + 1) is true`, one can solve `f(i)` by range querying `[l+1;r+1]`.
-  
-Check: https://codeforces.com/contest/985/problem/E
-
 ### How many ways to choose at least one element for each pair of two consecutive elements
 `f(n) = f(n - 1) + f(n - 2)`  
 Insert the `n`-th element by either skipping `n-1` or not.
@@ -73,12 +66,26 @@ For instance, if we are computing the number of paths of size `k` that don't use
 - `g(x) = Adj_matrix * x`: creating **all** paths, some might fail restrictions
 - `h(x) = Diag - Id`: creating 2-sized paths that use that goes forth and back at the same edge
 
+### DPs w/ transitions in timestamps (and different query/updt timestamps)
+Let's say we are dealing w/ a DP in which a transition `f(i) = ...f(j)...` has a time to be processed.  
+This yields a line sweep algorithm on the timestamps of these transitions.  
+  
+If a transition has a time for querying and another for updating, one needs to keep these latent updates and only publish them in the appropriate moment. That is, if a transition `x` has `query_time_x=10` and `update_time_x=15` and another transition `y` has `query_time_y=11` and `update_time_y=13`, transition `y` must not access updates from transition `x`.  
+One way of solving this is keeping in a priority queue sorted by time the transitions to be published. Once we reach a `query_time` that is able to access the top transition from this pq, we may publish it.
+
+## Optimization
+
+### Transition querying range of elements
+Approach solving the transitions using a RMQ/segment query structure.  
+  
+For instance, `f(i) = true, iff for any i in [l;r], f(i + 1) is true`, one can solve `f(i)` by range querying `[l+1;r+1]`.
+  
+Check: https://codeforces.com/contest/985/problem/E
+
 ### Linear recurrences
 Can be expressed in term of matrixes. Matrix exponentiation is associative, what enables us to solve a linear DP using:
-- Segtree
-- BIT
+- Segtree, BIT
 - Matrix exponentation
-- ...
 
 ### Matrix and tensor exponentiation
 Let's say we want to compute the number of paths of size `k` on a graph of size `N`. This can be solved by exponentiating `Adj_matrix`.  
