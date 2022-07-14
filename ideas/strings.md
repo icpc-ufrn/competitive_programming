@@ -37,8 +37,21 @@ Read `segtree.md`.
 ## Aho-chorasik
 A Trie with fail/suffix links that resemble the prefix function.
 
-### Fail-link tree
-In this tree, a vertex is a node in the Trie and edges are the fail links.  
+### Precompute transitions?
+You can choose to precompute transitions or not when using Aho.  
+
+If you choose to precompute it, Aho will be seen as an Automaton in which all transitions are already computed. On the build phase, since all alphabet needs to be visited, a cost of `O(N*ALPHA_SIZE)` will incur.  
+  
+If you choose to not precompute it, processing a transition might search for a valid search link before advancing (what amortizes to `O(n)` on a input string, *but not on a input trie*).
+
+### Online or offline
+You can solve a multi-pattern matching problem with Aho either online or offline.
+
+**Online**
+You will solve while consuming string `S`. That is, if you visited node `v` of the Aho Trie, `v` needs to know all possible accepted states in it's subtree. Compute this in the `build` phase.
+
+**Offline**
+First process the input string, then solve the suffix-link tree problem.  In this tree, a vertex is a node in the Trie and edges are the fail links.  
 Vertex `p` is parent of `v` if there is a fail link from `v` to `p`, that is, `p` is the max prefix that is also a suffix from `v`. Since `p` is a suffix from `v`, all matches that occur in `v` also occur in `p`.  
   
 Thus, every match that occur in the subtree of `p`, occur also for `p`. This yields a tree subproblem:  
@@ -46,3 +59,8 @@ Traverse the tree, gathering matches in a structure so, when visiting `v`, you h
 
 ### DP on Aho-Automaton
 `[TODO]` aquela questão de digitar os ngc correção sla
+
+### Process trie instead of string
+One can search for patterns in a trie instead of in a string. 
+For this, run a euler tour on the Trie in order to flatten it (treat it as a string); also keep a stack while processing the flattened string in the Aho. 
+A timestep that enters a node will advance on the Aho and create push to the stack; a timestep that leaves will pop the stack.
