@@ -30,3 +30,19 @@ Given two strings, KMP can solve in `O(n+m)`:
 2- biggest suffix from A that starts in `B[i]`: if a suffix `S` starts in `T[i]`, `S` and `S` suffixes end in `T[i]+len(S)-1`  
 3- biggest substring between A and B  
 4- biggest possibly rotated substring between A and B
+
+### Put automaton on segtree
+Read `segtree.md`.
+
+## Aho-chorasik
+A Trie with fail/suffix links that resemble the prefix function.
+
+### Fail-link tree
+In this tree, a vertex is a node in the Trie and edges are the fail links.  
+Vertex `p` is parent of `v` if there is a fail link from `v` to `p`, that is, `p` is the max prefix that is also a suffix from `v`. Since `p` is a suffix from `v`, all matches that occur in `v` also occur in `p`.  
+  
+Thus, every match that occur in the subtree of `p`, occur also for `p`. This yields a tree subproblem:  
+Traverse the tree, gathering matches in a structure so, when visiting `v`, you have access to all matches from its subtree. You which patterns were added to `v`, so these can be handled as queries in `v`.
+
+### DP on Aho-Automaton
+`[TODO]` aquela questão de digitar os ngc correção sla
