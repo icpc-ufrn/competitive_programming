@@ -1,6 +1,6 @@
 # Segtree
 
-### Histogram on a weighted array
+### <a name="histogram_weighted_array"></a> Histogram on a weighted array
 Let's say we have an array where `a_i` is a weight and we have operations like `add(lu;ru)`: add weights from `a_i`, (`lu <= i <= ru`) to out Segtree.  
 What we can do is set for each Segtree node `x` with interval `[l;r]` a variable `val[x]`: sum of `a_i` (`l <= i <= r`) and use this `val[x]` in our operations:  
 `add(lu;ru)` will processed as add `val[x]` to `seg[x]` if `x` is inside `[lu;ru]`.
@@ -9,7 +9,7 @@ What we can do is set for each Segtree node `x` with interval `[l;r]` a variable
 We want the area of the union of rectangles.
 We can do this with line sweep + segtree, traversing the X axis (left to right). 
 Note that we can decompose every y-aligned edge into several intervals (consecutive endpoints considering all endpoints). 
-Our segtree leaves are such intervals. These will have weights just as handling a **histogram on a weighted array**.  
+Our segtree leaves are such intervals. These will have weights just as handling a [histogram on a weighted array](#histogram_weighted_array).  
 While traversing the X axis, we want to count how many times each interval occured and use these interval sizes in our area calculation.
 Even if a interval is counted multiple times, it only contributes once to our area. 
 Every time we process an event in out line sweep (addition or removal of a y-aligned edge i.e. contiguous interval in our segtree), we can query the whole segtree and increment the answer.
@@ -21,6 +21,20 @@ When merging `X` to `Y` (`X` left and `Y` right) into `Z`:
 - `Z.prefix = X.prefix` or `X.prefix + Y.prefix` when `X.prefix = [lx;rx]` 
 - `Z.suffix = Y.sufix` or `X.sufix + Y.sufix` when `Y.sufix = [ly;ry]`  
 Check: https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A 
+
+### <a name="bin_search_combined_histogram"></a> Binary search/`k`-th value in a combined histogram segtrees
+
+Let's say we have a set `S` of histogram segtrees that count on the same set of elements `E`.  
+
+By running a binary search on the sum of `S` we can find the `k`-th element on this set `S`. 
+That is, when solving `[L;R]` looking at `p_1, p_2, ..., p_|S|` nodes for each segtree (base case, root for each segtree):
+- compute the sum `s` of `S` for `[L;m]`
+- if `s <= k`, search for `k` in `[L;m]`
+  - "walk" each `p_i` to it's left child
+- else, search for `k - s` in `[m+1;R]`
+  - "walk" each `p_i` to it's right child
+
+Note that, if a segtree `B` is a *subhistogram* (`B_i <= A_i` for all `i`) of another segtree `A`, we can also search for the `k`-th element in `A-B` by computing `seg_A[L...m] - seg_B[L...m]`. That is, the `k`-th element from `A` while excluding those from `B`.
 
 ## Linear recurrences on consecutive positions on Segtrees
 
@@ -60,47 +74,14 @@ Note that `seg` at version `i` acts as a prefix, keeping all items w/ endpoint l
 
 When querying for interval `[L;R]`, query on `seg_L` for the max element comparing the `.r` added. If the `.r` found is `>= R`, the range of the respective element contains `[L;R]`.
 
-### COT `[TODO]`
+### `k`-th element on a path in a tree
+Problem: find the `k`-th smallest node in a path from `u` to `v`. There are just queries, no updates.  
+  
+Construct `N` persistent segtrees, one for each tree node `v`, maintaining the histogram of values from the root to `v`.  
+Searching for the `k`-th value on a tree path can be solved using [binary search on combined histogram](#bin_search_combined_histogram) 
 
-[segtree persistente❤️][prefixo][busca binaria paralela][histograma][arvore][lca]
+By combining `+hist(u)`, `+hist(v)`, `-hist(lca(u,v))`, `-hist(par(lca(u,v))))`, we have the exact count of the values in the path from `u` to `v`. Run the binary search in this combined histogram (using the prefix persistent segtrees).
 
-Dada uma árvore com valores em seus nós, diga, para cada query (u,v,k), o k-esimo menor elemento que acontece no caminho de (u,v).
-
-É uma ideia nova então é meio difícil de tentar trazer uma intuição por trás, então vou apresentando os pedaços e como eles chegam na solução.
-
--SP: segtree persistente
--lc(X): filho esq. de X
--rc(X): filho dir. de X
--r(X): limite dir. de X
--l(X): limite esq. de X
--qntd(X): qntd de valores ativos no hist. em X.
--hist(u): hist prefixo em u
-
-(1): Para cada vértice da árvore, mantenha um histograma dos valores de vértices que acontecem da raiz até esse vértices. Essa info consegue ficar num node de uma SP. Custo O(nlogn).
-
-Basta, numa DFS visitando X com pai Y, criar um novo node hist(X) "em cima" do hist(Y), agora com a contagem do valor de X atualizado. "em cima"(Y) é fazer um update em cima de Y, como de praxe em SP.
-
-Note que o histograma de Y é um "prefixo" do histograma de X.
-
-(2): Para uma segtree (normal) de histograma, achar o k-esimo menor valor em O(logn).
-
-É uma ideia recursiva/BB.
-Estamos procurando o k-esimo menor valor no nó X (com filhos lc(X) e rc(X)).
-Note que qntd(lc(X)) nos diz qntd. valores ativos em [l(lc(x));r(lc(x))]
-Se k > qntd(lc(X)), procure em rc(X) com k = k - lc(X).
-Senão, procure em lc(X) com k.
-
-(3): É possível combinar (somando ou subtraindo) e achar o k-esimo menor elemento em O(logn) de duas segtrees de histogramas.
-É necessário que haja uma correspondência em cima dos intervalos de seus nós.
-
-Sejam X e Y as raízes das segtrees. Temos que L = l(lc(X)) = l(lc(Y)) e R = r(lc(X)) = r(lc(Y)).
-Seguindo a mesma ideia de (2), temos a quantidade de elementos no intervalo [L;R] ao combinarmos qntd(X) e qntd(Y) (somando ou subtraindo).
-Compare k com qntd(X) +/- qntd(Y) e siga os passos semelhantes a (2).
-
-(4): O k-esimo elemento no caminho de u até v pode ser econtrado usando (1) e (3).
-
-Note que combinando (+hist(u), +hist(v), -hist(lca(u,v)), -hist(par(lca(u,v)))) tem a contagem dos valores no caminho de u até v.
-Para combinar esses histogramas, tome seus nós na SP construídos em (1) e execute o algoritmo descrito em (3).
 
 ## HLD
 ### Non-commutative operations on arrays and trees
