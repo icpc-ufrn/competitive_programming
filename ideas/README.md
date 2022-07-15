@@ -9,6 +9,9 @@ P is sufficient and necessary for Q, (P => Q) and (Q => P)
 
 ## General
 
+### Median on sub-arrays `[TODO]`
+https://codeforces.com/blog/entry/18879?#comment-238126
+
 ### Paint small grid with squares
 Let's say we are painting the whole grid from bottom to top, left to right. Then, the bottom-left corner of each square of side `L` will keep a latent painting `L`. 
 When you visit a point w/ latent painting `X`, paint the square of the current point and set a latent painting of `X-1` at upper and right. 
