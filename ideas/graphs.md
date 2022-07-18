@@ -33,12 +33,16 @@ Iterate through all `T` set of nodes forming a connected graph, `g(S) = sum_T[f(
 Suppose a graph with sides A and B for bipartite matching and that the size of A is really small (`<15?`). Nodes from B may be merged if they connect to the same nodes from A. The number of condensed nodes will be at most `2^sz(A)`, what might be smaller than `B`. 
 
 ### Hall's theorem on contiguous intervals
-We have a bipartite matching problem in which the `i`-th position from the left side reaches `[i-r;i+r]` on the right side. Even though Hall's theorem states that we need to check for every interval, we only need to worry about contiguous intervals: define `f(S)` as reachable positions from `S=a,b,...,z \in left`. Suppose that Hall's theorem fails for a non-contiguous `S` i.e. `|S| < |f(S)|`:
+We have a bipartite (`left` and `right` sets) matching problem in which an element `x` from `left` side have edges to `[lx_0;rx_0]`, `[lx_1;rx_1]`, ... (that is, it has edges to a set of intervals) in `right`.  
+  
+We can use Hall's theorem in order to check if there is a matching that **saturates all elements in `right` that have outgoing edges**, using some of these same edges.  
+Even though Hall's theorem states that we need to check for every subset, we only need to worry about contiguous intervals: define `f(S)` as reachable positions from `S=a,b,...,z`, `S` is a subset from `left`. Suppose that Hall's theorem fails for a non-contiguous `S` i.e. `|S| > |f(S)|`:
 - If `f(S)` is contiguous, the contiguous interval `[l(S);r(S)]` will also fail
 - If `f(S)` is non-contiguous, it must be that one of the contiguous segments of `S` fails too, since these are independent queries.   
 
 Thus, if a non-contiguous `S` fails, it is guaranteed that a contiguous interval will fail, so only these need to be checked.   
-Check: https://szkopul.edu.pl/problemset/problem/EwpbJWZPly_zZ5i4ytg_8fDE/site/?key=statement
+Check: https://szkopul.edu.pl/problemset/problem/EwpbJWZPly_zZ5i4ytg_8fDE/site/?key=statement  
+Check: https://atcoder.jp/contests/arc144/submissions/33347474
 
 ## 2SAT
 Build an implication graph: nodes are propositions (`x`) and their negations (`~x`) and there is a **direct** edge `(p,q)` if `p => q`. Also, if `(p,q)` exists, so does `(~q,~p)` (contraposition). 
