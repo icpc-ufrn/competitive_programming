@@ -33,9 +33,9 @@ Iterate through all `T` set of nodes forming a connected graph, `g(S) = sum_T[f(
 Suppose a graph with sides A and B for bipartite matching and that the size of A is really small (`<15?`). Nodes from B may be merged if they connect to the same nodes from A. The number of condensed nodes will be at most `2^sz(A)`, what might be smaller than `B`. 
 
 ### Hall's theorem on contiguous intervals
-Prerequistes:
+Notation:
 - `f(S)` is the set of adjacent nodes of `S`
-- An `X`-perfect matching (`X` saturation) is a matching which covers every vertex in `X` with an out edge
+- An `X`-perfect matching (`X` saturation) is a matching which covers every vertex in `X` with an edge
 - Hall's: There is a`X`-perfect matching iff for every subset `W` of `X`, `|W| <= |f(W)|`.
 
 We have a bipartite (`L` and `R` sets) matching problem. 
@@ -47,7 +47,7 @@ That is, if we prove that a non-contiguous `S` failing implies a contiguos `S'` 
 This is particullary true when, for two adjacent elements `x,y \in L` , `|f(x) - f(y)| <= 1`. 
 - Suppose that a **non-contiguous `S`** won't saturate i.e. `|S| > |f(S)|` and `S` cannot be represented as a range
 - If `f(S)` is contiguous, the contiguous interval `[l(S);r(S)]` will also fail (`l(S)` and `r(S)` are the leftmost and rightmost positions of `S`)
-  - Filling `S` with elements from `[l(S);r(S)]` will add 1 to the domain and at most 1 to the image, keeping the inequality
+  - Filling `S` with elements from `[l(S);r(S)]` will add 1 to the domain and at most 1 to the image, maintaining the inequality
 - If `f(S)` is non-contiguous, it must be that one of the contiguous segments of `S` fails too, since these are independent queries.
   - TODO
 
