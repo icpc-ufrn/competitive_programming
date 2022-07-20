@@ -40,19 +40,9 @@ Notation:
 
 We have a bipartite (`L` and `R` sets) matching problem. 
 In order to find a `L`-perfect matching, Hall's condition is thus sufficient and necessary. 
-However, even though Hall's theorem states that we need to check for every subset `S` of `L`, we **may only need to worry about contiguous intervals**.
-That is, if we prove that a non-contiguous `S` failing implies a contiguos `S'` failing, we may check only contiguous `S'` subsets.
 
-#### Common case
-This is particullary true when, for two adjacent elements `x,y \in L` , `|f(x) - f(y)| <= 1`. 
-- Suppose that a **non-contiguous `S`** won't saturate i.e. `|S| > |f(S)|` and `S` cannot be represented as a range
-- If `f(S)` is contiguous, the contiguous interval `[l(S);r(S)]` will also fail (`l(S)` and `r(S)` are the leftmost and rightmost positions of `S`)
-  - Filling `S` with elements from `[l(S);r(S)]` will add 1 to the domain and at most 1 to the image, maintaining the inequality
-- If `f(S)` is non-contiguous, it must be that one of the contiguous segments of `S` fails too, since these are independent queries.
-  - TODO
+TODO
 
-
-Thus, if a non-contiguous `S` fails, it is guaranteed that a contiguous interval will fail, so only these need to be checked.   
 Check: https://szkopul.edu.pl/problemset/problem/EwpbJWZPly_zZ5i4ytg_8fDE/site/?key=statement  
 Check: https://atcoder.jp/contests/arc144/submissions/33347474
 
